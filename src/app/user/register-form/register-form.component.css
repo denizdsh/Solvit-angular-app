@@ -1,0 +1,142 @@
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: auto;
+}
+
+.auth-form div {
+    width: 100%;
+    margin: 15px auto;
+    position: relative;
+}
+
+.auth-form-label {
+    font-size: 1.1rem;
+    padding-left: 5px;
+}
+
+.auth-form-input {
+    font-size: 1.2rem;
+    color: inherit;
+    background: #282C34;
+    border: 1px solid #313846;
+    border-radius: 8px;
+    outline: none;
+    padding: 15px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.auth-form-input:focus {
+    outline: 2px solid #313846;
+}
+
+.auth-form-password-label-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.fa-eye, .fa-eye-slash {
+    font-size: 1.2rem;
+    color: inherit;
+}
+
+.fa-eye-slash {
+    color: gray;
+}
+
+.auth-form-submit {
+    outline: none;
+    border: 2px solid #313846;
+    font-size: inherit;
+    color: inherit;
+    background: #282C34;
+    border-radius: 30px;
+    padding: 8px 25px;
+}
+
+.auth-form-submit:hover {
+    outline: 1px solid #313846;
+    cursor: pointer;
+}
+
+.auth-form-imageUrl-label:hover {
+    cursor: pointer;
+}
+
+.link-to-other-auth {
+    color: #86D6F9;
+    text-decoration: none;
+    padding-left: 10px;
+}
+
+.avatar-icon {
+    user-select: none;
+}
+
+.required-asterisk {
+    font-size: 0.75rem;
+    position: relative;
+    bottom: 5px;
+    color: rgb(158, 50, 50);
+    margin-left: 1px;
+}
+
+.auth-form-see-password {
+    user-select: none;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    background: #282C34;
+}
+
+.auth-form-input.ng-touched.ng-invalid {
+    border: 1px solid #B40F12;
+}
+
+.error-popup {
+    user-select: none;
+    position: absolute;
+    bottom: calc(1.2rem + 44px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: fit-content;
+    padding: 4px 8px;
+    background: rgb(202, 38, 38);
+    color: inherit;
+    border-radius: 4px;
+    font-weight: 400;
+}
+
+.error-popup::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    border: 12px solid transparent;
+    transform: translate(-50%, 0px);
+    border-top-color: rgb(202, 38, 38);
+}
+
+p.error-popup-content {
+    margin: 0;
+}
+
+.auth-form-submit:active {
+    position: relative;
+    top: 2px;
+}
+
+.auth-form-submit:disabled {
+    color: gray;
+    background-color: #262A37;
+}
+
+.auth-form-submit:disabled:hover {
+    outline: none;
+    cursor: default;
+}

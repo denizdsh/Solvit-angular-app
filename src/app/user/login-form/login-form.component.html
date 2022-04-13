@@ -1,0 +1,57 @@
+<form #form="ngForm" class="auth-form" (ngSubmit)="loginHandler(form)">
+    <div>
+        <!-- errors -->
+        <article class="error-popup" *ngIf="email.errors && email.touched">
+            <p class="error-popup-content">
+                <ng-container *ngIf="email.errors['required']; else patternEmail">
+                    Email is required
+                </ng-container>
+                <ng-template #patternEmail>
+                    <ng-container *ngIf="email.errors['pattern']">
+                        Email must be valid
+                    </ng-container>
+                </ng-template>
+            </p>
+        </article>
+        <!--  -->
+        <label class="auth-form-label" for="email">Email<span class="required-asterisk">*</span></label>
+        <input ngModel #email="ngModel" class="auth-form-input" type="email" id="email" name="email"
+            placeholder="john@doe.com" required [pattern]="patterns.email" />
+    </div>
+    <div>
+        <!-- errors -->
+        <article class="error-popup" *ngIf="password.errors && password.touched">
+            <p class="error-popup-content">
+                <ng-container *ngIf="password.errors['required']; else minlengthPassword">
+                    Password is required
+                </ng-container>
+                <ng-template #minlengthPassword>
+                    <ng-container *ngIf="password.errors['minlength']; else patternPassword">
+                        Password should be at least 6 characters long
+                    </ng-container>
+                </ng-template>
+                <ng-template #patternPassword>
+                    <ng-container *ngIf="password.errors['matchPattern']">
+                        Password can only consist of letters, digits and common symbols
+                    </ng-container>
+                </ng-template>
+            </p>
+        </article>
+        <!--  -->
+        <article class="auth-form-password-label-wrap">
+            <label class="auth-form-label" for="password">Password<span class="required-asterisk">*</span></label>
+        </article>
+        <article class="auth-form-see-password" (click)="togglePasswordVisibilityHandler()">
+            <fa-icon *ngIf="passwordType === 'password'" [icon]="icons.crossedEye" class="fa-eye-slash"></fa-icon>
+            <fa-icon *ngIf="passwordType !== 'password'" [icon]="icons.eye" class="fa-eye"></fa-icon>
+        </article>
+        <input ngModel #password="ngModel" class="auth-form-input" [type]="passwordType" id="password" name="password"
+            required [minlength]="6" [matchPattern]="patterns.password" />
+    </div>
+    <div>
+        <input class="auth-form-submit" type="submit" value="Login" [disabled]="form.invalid" />
+        <a class="link-to-other-auth" routerLink="/user/register">
+            Don't have an account yet?
+        </a>
+    </div>
+</form>

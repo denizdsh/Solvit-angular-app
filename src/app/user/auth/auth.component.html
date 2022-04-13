@@ -1,0 +1,15 @@
+<section class="auth-section">
+    <fa-icon [icon]="icons.javascript" [class]="'auth-top-left-icon ' + iconClassList"></fa-icon>
+    <span [class]="'csharp-icon auth-top-right-icon ' + iconClassList">C#</span>
+
+    <div class="auth-title-holder">
+        <h1 class="auth-title">{{title}}</h1>
+        <div class="line-under-title"></div>
+    </div>
+
+    <app-login-form *ngIf="isLogin" style="width: 100%;"></app-login-form>
+    <app-register-form *ngIf="!isLogin" style="width: 100%;"></app-register-form>
+
+    <fa-icon [icon]="icons.python" [class]="'auth-bottom-left-icon ' + iconClassList"></fa-icon>
+    <fa-icon [icon]="icons.java" [class]="'auth-bottom-right-icon ' + iconClassList"></fa-icon>
+</section>
