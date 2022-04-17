@@ -1,0 +1,20 @@
+<!-- {showCreateTopicLink &&
+    <Routes>
+        <Route path="create" element={<CreateTopic />} />
+    </Routes>} -->
+<section class="content">
+    <!-- <aside> -->
+        <!-- {showBrowseCategories && <BrowseCategoriesAside />} -->
+        <!-- {(showAside && topics?.length > 0) && <Aside />} -->
+    <!-- </aside> -->
+    <section class="topics" *ngFor="let topic of topics">
+        <!-- {CustomHeading ? CustomHeading : <></>} -->
+        <!-- {showCreateTopicLink && <CreateTopicLink />} -->
+        <!-- {topics -->
+        <!-- ? topics.length > 0 -->
+        <!-- ? topics.map(topic => <TopicCard topic={topic} key={topic._id} isAuthenticated={isAuthenticated} user={user} fc={fc} st={st} />) -->
+        <!-- : <p class='no-posts-message'>{message}</p> -->
+        <!-- : <Spinner modalType='spinner' />} -->
+        <app-topic-card [topic]="topic"></app-topic-card>
+    </section>
+</section>

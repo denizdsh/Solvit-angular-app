@@ -1,0 +1,182 @@
+.topic {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    outline: 1px solid #282C34;
+    background: #262A37;
+    padding: 10px 15px 15px 15px;
+    margin: 20px 0;
+}
+
+
+
+.topic.active-hover:hover {
+    outline: 1px solid #313846;
+}
+
+.topic-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topic-info a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.topic-info-creation-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.topic-info-category {
+    font-size: 1rem;
+    margin-right: 10px;
+    color: lightgray;
+}
+
+.topic-info-category:hover {
+    text-decoration: underline;
+}
+
+.topic-info-creation {
+    font-size: 0.75rem;
+    color: gray;
+}
+
+.topic-info-creation-posted-by {
+    margin-right: 7px;
+}
+
+.topic-info-creation-posted-by-username:hover {
+    text-decoration: underline;
+}
+
+.topic-info-creation-date {
+    font-size: 0.7rem;
+}
+
+.topic-info-follow-category-btn {
+    border: none;
+    outline: none;
+    background: green;
+    color: inherit;
+    border-radius: 5px;
+    font-size: 0.7rem !important;
+    text-transform: none !important;
+}
+
+.topic-info-follow-category-btn.unfollow-category-btn {
+    color: lightblue;
+    background: none;
+}
+
+.topic-content {
+    display: flex;
+    flex-direction: column;
+    max-height: 60vh;
+    margin-bottom: 10px;
+}
+
+.topic-content.hover:hover {
+    cursor: pointer;
+}
+
+.topic-content-img {
+    align-self: center;
+}
+
+.topic-content-description {
+    padding: 5px 12px;
+    font-size: 1rem;
+    color: gray;
+}
+
+.topic-content-description.scrollbox {
+    max-height: 30vh;
+}
+
+.topic-content-description-text {
+    margin: 0;
+}
+
+.topic-content-img-image {
+    max-width: 100%;
+    width: auto;
+    border-radius: 5px;
+}
+
+.scrollbox {
+    overflow: auto;
+}
+
+.topic-title {
+    font-size: 1.4rem;
+    margin: 5px 0 10px 0;
+}
+
+.topic-functionality-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    color: gray;
+}
+
+.topic-functionality-list-item {
+    cursor: pointer;
+    width: 33%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.topic-functionality-list-item-likes {
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.topic-functionality-list-item-comments {
+    justify-content: center;
+}
+
+.topic-functionality-list-item-follow {
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.far, .fas {
+    font-size: 1.5rem;
+    margin-right: 6px;
+}
+
+.topic-functionality .fas.fa-heart {
+    color: red;
+}
+
+.topic-functionality .fas.fa-bookmark {
+    color: rgba(255, 208, 0, 0.857);
+}
+
+.topic-functionality-list-item:hover>span {
+    color: #D7DADC;
+}
+
+.topic-functionality-list-item-likes:hover>.far.fa-heart {
+    color: red;
+}
+
+.topic-functionality-list-item-follow:hover>.far.fa-bookmark {
+    color: rgba(255, 208, 0, 0.857);
+}
+
+.topic-functionality-list-item-comments:hover>.fas.fa-comments {
+    color: #D7DADC;
+}

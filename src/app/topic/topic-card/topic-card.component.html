@@ -1,0 +1,60 @@
+<section class="topic active-hover">
+    <article class="topic-info">
+        <article class="topic-info-creation-wrap">
+            <article class="topic-info-category">
+                <span class="category">
+                    <a [routerLink]="'/c/' + topic.category">
+                        c/{{topic.category}}
+                    </a>
+                </span>
+            </article>
+            <article class="topic-info-creation">
+                <span class="topic-info-creation-posted-by">
+                    by
+                    <a class="topic-info-creation-posted-by-username"
+                        [routerLink]="'/u/' + topic.author">u/{{topic.author}}
+                    </a>
+                </span>
+                <span class="topic-info-creation-date">{{formatDate(topic.createdAt)}}</span>
+            </article>
+        </article>
+        <article class="topic-info-follow-category">
+            <button mat-button class="topic-info-follow-category-btn unfollow-category-btn"
+                (click)="handler()">Following</button>
+            <button mat-raised-button class="topic-info-follow-category-btn" (click)="handler()">Follow</button>
+        </article>
+    </article>
+    <article class="topic-content hover" (click)="navigateHandler()">
+        <article class="topic-content-title">
+            <h2 class="topic-title">{{topic.title}}</h2>
+        </article>
+
+        <article *ngIf="topic.imageUrl" class="topic-content-img scrollbox">
+            <img [src]="topic.imageUrl" alt="image" class="topic-content-img-image" />
+        </article>
+        <article *ngIf="!topic.imageUrl" class="topic-content-description scrollbox">
+            <p class="topic-content-description-text">{{topic.description}}</p>
+        </article>
+
+    </article>
+    <article class="topic-functionality">
+        <ul class="topic-functionality-list">
+            <li class="topic-functionality-list-item topic-functionality-list-item-likes" (click)="handler()">
+                <fa-icon [icon]="icons.like" class="fas fa-heart"></fa-icon>
+                <fa-icon [icon]="icons.dislike" class="far fa-heart"></fa-icon>
+                <span class="likes-count">{{topic._likesCount}} Likes</span>
+            </li>
+            <li class="topic-functionality-list-item topic-functionality-list-item-comments" (click)="handler()">
+                <fa-icon [icon]="icons.comment" class="fas fa-comment"></fa-icon>
+                <span class="comments-count">{{topic.comments}} Comments</span>
+            </li>
+            <li class="topic-functionality-list-item topic-functionality-list-item-follow" (click)="handler()">
+                <span class="save-topic-text">
+                    Un/Save
+                </span>
+                <fa-icon [icon]="icons.save" class="fas fa-bookmark"></fa-icon>
+                <fa-icon [icon]="icons.unsave" class="far fa-bookmark"></fa-icon>
+            </li>
+        </ul>
+    </article>
+</section>
