@@ -1,0 +1,12 @@
+<article class="user-menu" [@userMenu]="userMenuIsOpen ? 'open' : 'closed'">
+    <article class="user-menu-info">
+        <app-avatar size="9rem" image="https://www.blexar.com/avatar.png" alt="A"></app-avatar>
+        <p class="user-menu-info-username">User</p>
+        <p class="user-menu-info-email">user@gmail.com</p>
+    </article>
+    <article class="user-menu-links">
+        <a routerLink="/u/user" class="dropdown-content-link">My Topics</a>
+        <a routerLink='/user/edit-profile' class="dropdown-content-link">Edit Avatar</a>
+        <a routerLink="/user/logout" class="dropdown-content-link">Logout</a>
+    </article>
+</article>

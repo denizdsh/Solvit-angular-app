@@ -1,0 +1,22 @@
+.avatar-container{
+    border-radius: 50%;
+    overflow: hidden;
+    user-select: none;
+    text-align: center;
+    box-shadow: 0px 0px 7px -3px #86d6f9;
+    cursor: pointer;
+    color: rgb(109, 141, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar{
+    width: 100%;
+}
+
+.avatar-alt{
+    margin: 0 auto;
+    text-shadow: 0px 0px 20px #4842f5;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
