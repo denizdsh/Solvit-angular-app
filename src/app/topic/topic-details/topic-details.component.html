@@ -1,96 +1,84 @@
 <!-- topic._id -->
 <!-- ? -->
-<section class="topic details">
-    <article class="topic-info  details">
-        <article class="topic-info-creation-wrap details">
-            <article class="topic-info-category details">
-                <span class="category details">
+<section class="topic">
+    <article class="topic-info ">
+        <article class="topic-info-creation-wrap">
+            <article class="topic-info-category">
+                <span class="category">
                     <a [routerLink]="'/c/' + topic.category">
                         category/{{topic.category}}
                     </a>
                 </span>
             </article>
-            <article class="topic-info-creation details">
-                <span class="topic-info-creation-posted-by details">
+            <article class="topic-info-creation">
+                <span class="topic-info-creation-posted-by">
                     by <a class="topic-info-creation-posted-by-username"
                         [routerLink]="'/u/' + topic.author">u/{{topic.author}}</a>
                 </span>
-                <span class="topic-info-creation-date details">{{formatDate(topic.createdAt)}}</span>
+                <span class="topic-info-creation-date">{{formatDate(topic.createdAt)}}</span>
             </article>
         </article>
-        <article class="topic-info-follow-category details">
-            <!-- { -->
-            <!-- th.hasFollowed -->
-            <button mat-button class="topic-info-follow-category-btn unfollow-category-btn details"
-                (click)="handler()">Following</button>
-            <button mat-raised-button class="topic-info-follow-category-btn details" (click)="handler()">Follow</button>
-
+        <article class="topic-info-follow-category">
+            <button *ngIf="followingCategories.includes(topic.category)" mat-button
+                class="topic-info-follow-category-btn unfollow-category-btn" (click)="handler()">Following</button>
+            <button *ngIf="!followingCategories.includes(topic.category)" mat-raised-button
+                class="topic-info-follow-category-btn" (click)="handler()">Follow</button>
         </article>
     </article>
-    <article class="topic-content details">
-        <article class="topic-content-title details">
-            <h2 class="topic-title details">
+    <article class="topic-content">
+        <article class="topic-content-title">
+            <h2 class="topic-title">
                 {{topic.title}}
             </h2>
         </article>
 
-        <article class="topic-content-description details">
-            <p class="topic-content-description-text details">{{topic.description}}</p>
+        <article class="topic-content-description">
+            <p class="topic-content-description-text">{{topic.description}}</p>
         </article>
 
-        <article *ngIf="topic.imageUrl" class="topic-content-img details">
-            <img [src]="topic.imageUrl" alt="image" class="topic-content-img-image details" />
+        <article *ngIf="topic.imageUrl" class="topic-content-img">
+            <img [src]="topic.imageUrl" alt="image" class="topic-content-img-image" />
         </article>
 
     </article>
-    <article class="topic-functionality details">
-        <ul class="topic-functionality-list details">
-            <li class="topic-functionality-list-item topic-functionality-list-item-likes details" (click)="handler()">
-                <!-- { -->
-                <!-- th.hasLiked -->
-                <fa-icon [icon]="icons.like" class="fas fa-heart details"></fa-icon>
-                <fa-icon [icon]="icons.dislike" class="far fa-heart details"></fa-icon>
-                <!-- } -->
-                <span class="likes-count details">{{topic._likesCount}} Likes</span>
+    <article class="topic-functionality">
+        <ul class="topic-functionality-list">
+            <li class="topic-functionality-list-item topic-functionality-list-item-likes" (click)="handler()">
+                <fa-icon *ngIf="user && topic.likes.includes(user._id)" [icon]="icons.like" class="fas fa-heart">
+                </fa-icon>
+                <fa-icon *ngIf="!user || !topic.likes.includes(user._id)" [icon]="icons.dislike" class="far fa-heart">
+                </fa-icon>
+                <span class="likes-count">{{topic._likesCount}} Likes</span>
             </li>
-            <li class="topic-functionality-list-item topic-functionality-list-item-follow details" (click)="handler()">
-                <!-- { -->
-                <!-- !isOwner && -->
-                <span class="save-topic-text">
-                    Un/Save
+            <li class="topic-functionality-list-item topic-functionality-list-item-follow"
+                [class]="isOwner ? 'owner' : ''" (click)="handler()">
+                <span *ngIf="!isOwner" class="save-topic-text">
+                    {{savedTopics.includes(topic._id) ? 'Unsave' : 'Save'}}
                 </span>
-                <!-- } -->
-                <!-- { -->
-                <!-- th.hasSaved -->
-                <fa-icon [icon]="icons.save" class="fas fa-bookmark details"></fa-icon>
-                <fa-icon [icon]="icons.unsave" class="far fa-bookmark details"></fa-icon>
-                <!-- } -->
-                <!-- { -->
-                <!-- isOwner && -->
-                <span class="save-topic-text">
-                    Un/Save
+                <fa-icon *ngIf="savedTopics.includes(topic._id)" [icon]="icons.save" [class]="saveIconClasses">
+                </fa-icon>
+                <fa-icon *ngIf="!savedTopics.includes(topic._id)" [icon]="icons.unsave" [class]="saveIconClasses">
+                </fa-icon>
+                <span *ngIf="isOwner" class="save-topic-text">
+                    {{savedTopics.includes(topic._id) ? 'Unsave' : 'Save'}}
                 </span>
-                <!-- } -->
             </li>
-            <!-- { -->
-            <!-- isOwner && -->
 
-            <li class="topic-functionality-list-item topic-functionality-list-item-edit details" (click)="handler()">
-                <button mat-button routerLink='edit' class='owner-functionality-button button-edit'>
-                    Edit
-                    <fa-icon [icon]="icons.edit" class="fas fa-pencil-alt"></fa-icon>
-                </button>
-            </li>
-            <!-- } -->
-            <!-- { -->
-            <!-- isOwner && -->
-            <li class="topic-functionality-list-item topic-functionality-list-item-delete  details">
-                <button mat-button routerLink='delete' class='owner-functionality-button button-delete'>
-                    Delete
-                    <fa-icon [icon]="icons.delete" class="fas fa-trash"></fa-icon>
-                </button>
-            </li>
-            <!-- } -->
+            <ng-container *ngIf="isOwner">
+                <li class="topic-functionality-list-item topic-functionality-list-item-edit" (click)="handler()">
+                    <button mat-button routerLink='edit' class='owner-functionality-button button-edit'>
+                        Edit
+                        <fa-icon [icon]="icons.edit" class="fas fa-pencil-alt"></fa-icon>
+                    </button>
+                </li>
+
+                <li class="topic-functionality-list-item topic-functionality-list-item-delete ">
+                    <button mat-button routerLink='delete' class='owner-functionality-button button-delete'>
+                        Delete
+                        <fa-icon [icon]="icons.delete" class="fas fa-trash"></fa-icon>
+                    </button>
+                </li>
+            </ng-container>
         </ul>
     </article>
     <!-- <CommentSection [id]="topic._id" isAuthenticated={isAuthenticated} /> -->

@@ -15,8 +15,6 @@ export class AuthComponent {
   constructor(private router: Router) {
     this.isLogin = router.url.toString().includes('login');
     this.title = this.isLogin ? 'Login' : 'Register';
-    console.log(router.url);
-    console.log(this.isLogin);
 
     this.iconClassList = 'auth-bg-icon ' + (this.isLogin ? '' : 'auth-page-register')
   }

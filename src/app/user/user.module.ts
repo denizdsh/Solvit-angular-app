@@ -10,6 +10,7 @@ import { AuthComponent } from './auth/auth.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,9 +22,10 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
+    FontAwesomeModule,
     SharedModule,
     UserRoutingModule,
-    FontAwesomeModule
   ]
 })
 export class UserModule { }

@@ -63,10 +63,13 @@
         </ng-container>
         <ng-container *ngIf=" !isAuth">
             <li class="nav-list-item main-nav-link">
-                <a routerLink="/login" [class]="'auth-btn login-btn' + activeLink('/user/login')">Log In</a>
+                <a routerLink="/user/login" [class]="'auth-btn login-btn' + activeLink(['/login', '/user/login'])">
+                    Log In
+                </a>
             </li>
             <li class="nav-list-item main-nav-link">
-                <a routerLink="/register" [class]="'auth-btn register-btn' + activeLink('/user/register')">Sign Up</a>
+                <a routerLink="/user/register"
+                    [class]="'auth-btn register-btn' + activeLink(['/register', '/user/register'])">Sign Up</a>
             </li>
         </ng-container>
     </ul>

@@ -30,7 +30,6 @@ export class TopicsComponent {
   constructor(private http: HttpClient, private service: TopicService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.url.subscribe({
       next: (newUrl) => {
-        console.log(newUrl)
         this.urlProp = newUrl[1]?.path as urlProp;
         this.type = categories[(newUrl[0]?.path || '') as urlTopicType] as topicType;
         this.updateTopics()

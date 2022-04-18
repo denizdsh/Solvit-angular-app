@@ -180,3 +180,7 @@
 .topic-functionality-list-item-comments:hover>.fas.fa-comments {
     color: #D7DADC;
 }
+
+.fa-bookmark {
+    margin-left: 6px;
+}

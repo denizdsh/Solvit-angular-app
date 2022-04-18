@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { icons, patterns } from 'src/app/shared/util';
+import { UserService } from '../user.service';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { icons, patterns } from 'src/app/shared/util';
 export class LoginFormComponent {
   passwordType: 'password' | 'text' = 'password';
 
-  constructor() { }
+  constructor(private router: Router, private service: UserService) { }
 
   get icons() { return icons };
   get patterns() { return patterns };
@@ -23,7 +25,13 @@ export class LoginFormComponent {
   loginHandler(form: NgForm): void {
     if (form.invalid) return;
 
-    const { email, password } = form.value;
-    console.log(email.trim(), password.trim());
+    let { email, password } = form.value;
+
+    try {
+      this.service.login({ email: email.trim(), password: password.trim() });
+      this.router.navigate(['']);
+    } catch (e) {
+      window.alert(e);
+    }
   }
 }

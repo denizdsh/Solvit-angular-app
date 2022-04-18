@@ -19,9 +19,10 @@
             </article>
         </article>
         <article class="topic-info-follow-category">
-            <button mat-button class="topic-info-follow-category-btn unfollow-category-btn"
-                (click)="handler()">Following</button>
-            <button mat-raised-button class="topic-info-follow-category-btn" (click)="handler()">Follow</button>
+            <button *ngIf="followingCategories.includes(topic.category)" mat-button
+                class="topic-info-follow-category-btn unfollow-category-btn" (click)="handler()">Following</button>
+            <button *ngIf="!followingCategories.includes(topic.category)" mat-raised-button
+                class="topic-info-follow-category-btn" (click)="handler()">Follow</button>
         </article>
     </article>
     <article class="topic-content hover" (click)="navigateHandler()">
@@ -40,8 +41,10 @@
     <article class="topic-functionality">
         <ul class="topic-functionality-list">
             <li class="topic-functionality-list-item topic-functionality-list-item-likes" (click)="handler()">
-                <fa-icon [icon]="icons.like" class="fas fa-heart"></fa-icon>
-                <fa-icon [icon]="icons.dislike" class="far fa-heart"></fa-icon>
+                <fa-icon *ngIf="user && topic.likes.includes(user._id)" [icon]="icons.like" class="fas fa-heart">
+                </fa-icon>
+                <fa-icon *ngIf="!user || !topic.likes.includes(user._id)" [icon]="icons.dislike" class="far fa-heart">
+                </fa-icon>
                 <span class="likes-count">{{topic._likesCount}} Likes</span>
             </li>
             <li class="topic-functionality-list-item topic-functionality-list-item-comments" (click)="handler()">
@@ -50,10 +53,11 @@
             </li>
             <li class="topic-functionality-list-item topic-functionality-list-item-follow" (click)="handler()">
                 <span class="save-topic-text">
-                    Un/Save
+                    {{savedTopics.includes(topic._id) ? 'Unsave' : 'Save'}}
                 </span>
-                <fa-icon [icon]="icons.save" class="fas fa-bookmark"></fa-icon>
-                <fa-icon [icon]="icons.unsave" class="far fa-bookmark"></fa-icon>
+                <fa-icon *ngIf="savedTopics.includes(topic._id)" [icon]="icons.save" class="fas fa-bookmark"></fa-icon>
+                <fa-icon *ngIf="!savedTopics.includes(topic._id)" [icon]="icons.unsave" class="far fa-bookmark">
+                </fa-icon>
             </li>
         </ul>
     </article>

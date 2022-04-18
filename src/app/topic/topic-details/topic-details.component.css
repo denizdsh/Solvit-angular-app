@@ -136,6 +136,10 @@
     padding-right: 20px;
 }
 
+.owner.topic-functionality-list-item-follow {
+    padding: 0;
+}
+
 .far, .fas {
     font-size: 1.5rem;
     margin-right: 6px;
@@ -143,6 +147,16 @@
 
 .topic-functionality .fas.fa-heart {
     color: red;
+}
+
+.fa-bookmark {
+    margin-left: 6px;
+    margin-right: 0px;
+}
+
+.owner.fa-bookmark {
+    margin-right: 6px;
+    margin-left: 0px;
 }
 
 .topic-functionality .fas.fa-bookmark {

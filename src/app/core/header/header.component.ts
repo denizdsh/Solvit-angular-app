@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { Router } from '@angular/router';
 import { state, style, transition, trigger, animate } from '@angular/animations';
 import { icons } from 'src/app/shared/util';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -45,9 +46,11 @@ export class HeaderComponent implements OnInit {
   @ViewChild('avatar') avatar!: ElementRef;
   activeCategoryMenu: ' active-dropdown-menu' | '' = '';
   userMenuIsOpen: boolean = false;
-  isAuth: boolean = false;
 
-  constructor(private router: Router, private renderer: Renderer2) { }
+
+  constructor(private router: Router, private renderer: Renderer2, private userService: UserService) { }
+
+  get isAuth(): boolean { return !!this.userService.user };
 
   ngOnInit(): void {
     this.renderer.listen('window', 'click', (e: PointerEvent): void => {
@@ -56,6 +59,7 @@ export class HeaderComponent implements OnInit {
       } else {
         this.activeCategoryMenu = '';
       }
+
 
       if (this.isAuth) {
         if (e.target === this.avatar.nativeElement || this.avatar.nativeElement.contains(e.target)) {
@@ -69,11 +73,15 @@ export class HeaderComponent implements OnInit {
 
   get icons() { return icons };
 
-  public activeLink(startWith: string): string {
-    if(startWith === '/c/java' && this.router.url.startsWith('/c/javascript')) return '';
+  public activeLink(startWith: string | string[]): string {
+    if (startWith === '/c/java' && this.router.url.startsWith('/c/javascript')) return '';
 
-    if (this.router.url.startsWith(startWith)) return ' active';
-    
+    if (typeof startWith == 'string') {
+      if (this.router.url.startsWith(startWith)) return ' active';
+    } else {
+      return startWith.some(s => this.router.url.startsWith(s)) ? ' active' : '';
+    }
+
     return '';
   }
 }
