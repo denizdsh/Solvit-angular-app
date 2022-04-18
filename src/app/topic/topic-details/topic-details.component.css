@@ -52,7 +52,7 @@
     margin-right: 7px;
 }
 
-.topic-info-creation-posted-by-username:hover {
+a.topic-info-creation-posted-by-username:hover {
     text-decoration: underline;
 }
 

@@ -47,7 +47,7 @@
                 </fa-icon>
                 <span class="likes-count">{{topic._likesCount}} Likes</span>
             </li>
-            <li class="topic-functionality-list-item topic-functionality-list-item-comments" (click)="handler()">
+            <li class="topic-functionality-list-item topic-functionality-list-item-comments" (click)="navigateHandler()">
                 <fa-icon [icon]="icons.comment" class="fas fa-comment"></fa-icon>
                 <span class="comments-count">{{topic.comments}} Comments</span>
             </li>

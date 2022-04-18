@@ -10,9 +10,10 @@ import { category } from '../shared/util';
 })
 export class UserService {
   user: IUser | undefined;
-  accessToken: string | null;
+  accessToken: string | null = this.localStorage.getItem('accessToken') || null;
   followingCategories: category[] = [];
   savedTopics: string[] = [];
+  isAuthProcessFinished: boolean = false;
 
   constructor(@Inject(LocalStorage) private localStorage: Window['localStorage'],
     private http: HttpClient) {
@@ -29,33 +30,42 @@ export class UserService {
     this.getFollowingCategories();
     this.getSavedTopics();
   }
+
   persistedLogin() { //check for token in local storage, api validates it and returns IUser data with new token
     if (this.accessToken) {
       this.http.post<IUser>(`${env.API_URL}/login/token`, { accessToken: this.accessToken }).subscribe({
         next: (user: IUser) => {
           this.handleUserAuth(user);
         },
-        error: (err) => { console.error(err); }
+        error: (err) => { console.error(err); },
+        complete: () => { this.isAuthProcessFinished = true; }
       });
+    } else {
+      this.isAuthProcessFinished = true;
     }
   }
 
   login(body: { email: string, password: string }): void {
+    this.isAuthProcessFinished = false;
+
     this.http.post<IUser>(`${env.API_URL}/login`, body).subscribe({
       next: (user: IUser) => {
         this.handleUserAuth(user);
-        console.log(user)
       },
-      error: (err) => { throw err }
+      error: (err) => { throw err },
+      complete: () => { this.isAuthProcessFinished = true; }
     });
   }
 
   register(body: { email: string, password: string }): void {
+    this.isAuthProcessFinished = false;
+
     this.http.post<IUser>(`${env.API_URL}/register`, body).subscribe({
       next: (user: IUser) => {
         this.handleUserAuth(user, true);
       },
-      error: (err) => { throw err }
+      error: (err) => { throw err },
+      complete: () => { this.isAuthProcessFinished = true; }
     });
   }
 
@@ -63,6 +73,8 @@ export class UserService {
     this.localStorage.removeItem('accessToken');
     this.accessToken = null;
     this.user = undefined;
+    this.followingCategories = [];
+    this.savedTopics = [];
   }
 
   getFollowingCategories(): void {

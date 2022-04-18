@@ -11,6 +11,8 @@ export class AppComponent implements OnInit {
 
   constructor(private userService: UserService) { }
 
+  get isAuthProcessFinished() { return this.userService.isAuthProcessFinished; }
+
   ngOnInit(): void {
     this.userService.persistedLogin();
   }
