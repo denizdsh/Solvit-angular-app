@@ -1,6 +1,6 @@
 <article class="avatar-container" [style]="style">
     <img *ngIf="image" [src]="image" [alt]="alt" class="avatar">
     <article *ngIf="!image" class="avatar-alt">
-        {{alt}}
+        {{alt.toLocaleUpperCase()}}
     </article>
 </article>

@@ -20,9 +20,9 @@
         </article>
         <article class="topic-info-follow-category">
             <button *ngIf="followingCategories.includes(topic.category)" mat-button
-                class="topic-info-follow-category-btn unfollow-category-btn" (click)="handler()">Following</button>
+                class="topic-info-follow-category-btn unfollow-category-btn" (click)="unfollowHandler()">Following</button>
             <button *ngIf="!followingCategories.includes(topic.category)" mat-raised-button
-                class="topic-info-follow-category-btn" (click)="handler()">Follow</button>
+                class="topic-info-follow-category-btn" (click)="followHandler()">Follow</button>
         </article>
     </article>
     <article class="topic-content">
@@ -43,7 +43,7 @@
     </article>
     <article class="topic-functionality">
         <ul class="topic-functionality-list">
-            <li class="topic-functionality-list-item topic-functionality-list-item-likes" (click)="handler()">
+            <li class="topic-functionality-list-item topic-functionality-list-item-likes" (click)="likeHandler()">
                 <fa-icon *ngIf="user && topic.likes.includes(user._id)" [icon]="icons.like" class="fas fa-heart">
                 </fa-icon>
                 <fa-icon *ngIf="!user || !topic.likes.includes(user._id)" [icon]="icons.dislike" class="far fa-heart">
@@ -51,7 +51,7 @@
                 <span class="likes-count">{{topic._likesCount}} Likes</span>
             </li>
             <li class="topic-functionality-list-item topic-functionality-list-item-follow"
-                [class]="isOwner ? 'owner' : ''" (click)="handler()">
+                [class]="isOwner ? 'owner' : ''" (click)="saveHandler()">
                 <span *ngIf="!isOwner" class="save-topic-text">
                     {{savedTopics.includes(topic._id) ? 'Unsave' : 'Save'}}
                 </span>

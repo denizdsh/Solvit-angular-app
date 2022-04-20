@@ -71,7 +71,8 @@ export class HeaderComponent implements OnInit {
     })
   }
 
-  get icons() { return icons };
+  get user() { return this.userService.user; };
+  get icons() { return icons; };
 
   public activeLink(startWith: string | string[]): string {
     if (startWith === '/c/java' && this.router.url.startsWith('/c/javascript')) return '';

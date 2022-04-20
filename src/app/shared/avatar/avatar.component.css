@@ -1,4 +1,4 @@
-.avatar-container{
+.avatar-container {
     border-radius: 50%;
     overflow: hidden;
     user-select: none;
@@ -6,17 +6,19 @@
     box-shadow: 0px 0px 7px -3px #86d6f9;
     cursor: pointer;
     color: rgb(109, 141, 255);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
 }
 
-.avatar{
+.avatar {
     width: 100%;
 }
 
-.avatar-alt{
+.avatar-alt {
+    max-height: fit-content;
     margin: 0 auto;
-    text-shadow: 0px 0px 20px #4842f5;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+    text-shadow: 0px 0px 1px #4842f5;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
 }

@@ -54,7 +54,7 @@
             <li class="nav-list-item main-nav-link">
                 <div #avatar>
                     <div class="avatar-background upper" [@upper-avatar]="userMenuIsOpen? 'active' : 'inactive'"></div>
-                    <app-avatar size="3rem" image="https://www.blexar.com/avatar.png" alt="A">
+                    <app-avatar size="3rem" [image]="user!.imageUrl" [alt]="user!.username[0]">
                     </app-avatar>
                     <div class="avatar-background" [@avatar]="userMenuIsOpen? 'active' : 'inactive'"></div>
                 </div>

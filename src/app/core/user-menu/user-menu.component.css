@@ -36,6 +36,10 @@
     padding: 15px;
 }
 
+.user-menu-info p {
+    margin: 15px 0px 5px 0px;
+}
+
 .user-menu-links {
     background: #262A37;
 }

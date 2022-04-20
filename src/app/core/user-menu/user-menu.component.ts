@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { IUser } from 'src/app/interfaces';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
@@ -33,9 +34,9 @@ import { UserService } from 'src/app/user/user.service';
 })
 export class UserMenuComponent {
   @Input() userMenuIsOpen: boolean = false;
-  constructor(private router: Router,private service: UserService){}
-
-  logout(){
+  constructor(private router: Router, private service: UserService) { }
+  get user(): IUser { return this.service.user!; }
+  logout() {
     this.service.logout();
     this.router.navigate(['/all']);
   }

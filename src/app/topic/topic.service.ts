@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment'
+import { environment as env } from '../../environments/environment'
 import { Observable } from 'rxjs';
 import { ITopic } from '../interfaces';
 import { category, query } from '../shared/util';
 import { UserService } from '../user/user.service';
 
-const url = environment['API_URL'] + '/topics';
+const url = env['API_URL'] + '/topics';
 
 type topicType = 'all' | 'followed' | 'category' | 'user' | 'saved';
 
@@ -32,21 +32,34 @@ export class TopicService {
   getAllTopics(query = defaultQuery): Observable<ITopic[]> {
     return this.http.get<ITopic[]>(`${url}${urlQuery(query)}`);
   }
+
   getFollowedTopics(query = defaultQuery): Observable<ITopic[]> {
     return this.http.get<ITopic[]>(`${url}/c/following${urlQuery(query)}`, { headers: { 'x-authorization': this.userService.user!.accessToken } });
   }
+
   getTopicsByCategory(category: category, query = defaultQuery): Observable<ITopic[]> {
     console.log('category', category);
     return this.http.get<ITopic[]>(`${url}/c/${category}${urlQuery(query)}`);
   }
+
   getTopicsByUser(userId: string, query = defaultQuery): Observable<ITopic[]> {
     return this.http.get<ITopic[]>(`${url}/u/${userId}${urlQuery(query)}`);
   }
+
   getSavedTopics(query = defaultQuery): Observable<ITopic[]> {
     return this.http.get<ITopic[]>(`${url}/c/saved${urlQuery(query)}`, { headers: { 'x-authorization': this.userService.user!.accessToken } });
   }
 
   getTopicById(id: string): Observable<ITopic> {
     return this.http.get<ITopic>(`${url}/${id}`);
+  }
+
+
+  likeTopic(topicId: string): Observable<string[]> {
+    return this.http.post<string[]>(`${url}/${topicId}/like`, {}, { headers: { 'x-authorization': this.userService.user!.accessToken } });
+  }
+
+  dislikeTopic(topicId: string): Observable<string[]> {
+    return this.http.post<string[]>(`${url}/${topicId}/dislike`, {}, { headers: { 'x-authorization': this.userService.user!.accessToken } });
   }
 }

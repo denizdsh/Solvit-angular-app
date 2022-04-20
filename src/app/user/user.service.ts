@@ -5,6 +5,9 @@ import { environment as env } from '../../environments/environment'
 import { LocalStorage } from '../core/injection-tokens';
 import { category } from '../shared/util';
 
+const thisUserUrl = `${env.API_URL}/u/me`;
+const userActionUrl = `${env.API_URL}/user-action`;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -77,15 +80,45 @@ export class UserService {
     this.savedTopics = [];
   }
 
+
   getFollowingCategories(): void {
-    this.http.get<category[]>(`${env.API_URL}/u/me/following-categories`, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+    this.http.get<category[]>(`${thisUserUrl}/following-categories`, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
       next: (categories) => this.followingCategories = categories,
       error: (err) => console.error(err)
     })
   }
 
   getSavedTopics(): void {
-    this.http.get<category[]>(`${env.API_URL}/u/me/saved-topics`, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+    this.http.get<category[]>(`${thisUserUrl}/saved-topics`, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+      next: (topics) => this.savedTopics = topics,
+      error: (err) => console.error(err)
+    })
+  }
+
+
+  followCategory(category: category): void {
+    this.http.post<category[]>(`${userActionUrl}/follow/${category}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+      next: (categories) => this.followingCategories = categories,
+      error: (err) => console.error(err)
+    })
+  }
+
+  unfollowCategory(category: category): void {
+    this.http.post<category[]>(`${userActionUrl}/unfollow/${category}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+      next: (categories) => this.followingCategories = categories,
+      error: (err) => console.error(err)
+    })
+  }
+
+  saveTopic(topicId: string): void {
+    this.http.post<string[]>(`${userActionUrl}/save/${topicId}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+      next: (topics) => this.savedTopics = topics,
+      error: (err) => console.error(err)
+    })
+  }
+
+  unsaveTopic(topicId: string): void {
+    this.http.post<string[]>(`${userActionUrl}/unsave/${topicId}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
       next: (topics) => this.savedTopics = topics,
       error: (err) => console.error(err)
     })
