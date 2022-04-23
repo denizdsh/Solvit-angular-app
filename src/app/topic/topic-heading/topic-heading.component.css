@@ -1,0 +1,43 @@
+.topics-heading {
+    margin-bottom: 15px;
+    color: gray;
+}
+
+.topics-heading-title {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 1.6rem;
+    margin-bottom: 5px;
+}
+
+.topics-heading-line {
+    position: relative;
+}
+
+.topics-heading-line::before {
+    content: "";
+    background: rgb(107, 107, 107);
+    height: 2px;
+    width: 96%;
+    position: absolute;
+    margin: 0 2%;
+}
+
+.user-topics-heading {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #262A37;
+    border-radius: 15px;
+    padding: 10px 20px;
+    border: 2px solid #313846;
+}
+
+.user-topics-heading:hover {
+    outline: 1px solid #313846;
+}
+
+.user-topics-heading-title {
+    margin-left: 40px;
+    font-size: 1.6rem;
+}

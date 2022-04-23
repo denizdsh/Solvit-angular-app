@@ -1,0 +1,11 @@
+<!-- underlined -->
+<section *ngIf="type === 'underlined'" class="topics-heading">
+    <p class="topics-heading-title">{{formatCategory(content)}}</p>
+    <div class="topics-heading-line"></div>
+</section>
+
+<!-- user -->
+<section *ngIf="type === 'user'" class="user-topics-heading">
+    <app-avatar size="4rem" [image]="imageUrl" [alt]="content[0].toLocaleUpperCase()"></app-avatar>
+    <p class="user-topics-heading-title">{{content}}'s posts</p>
+</section>
