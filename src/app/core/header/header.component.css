@@ -6,9 +6,10 @@
     background: #262b36;
     padding: 15px 10px;
     max-height: 10%;
+    position: relative;
 }
 
-.nav * {
+.nav, .nav * {
     z-index: 2;
 }
 

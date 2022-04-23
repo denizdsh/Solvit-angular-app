@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ValidateMatchPatternDirective } from './directives/validate-match-pattern.directive';
 import { ValidateSameValueDirective } from './directives/validate-same-value.directive';
 import { AvatarComponent } from './avatar/avatar.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 
@@ -10,15 +11,17 @@ import { AvatarComponent } from './avatar/avatar.component';
   declarations: [
     ValidateMatchPatternDirective,
     ValidateSameValueDirective,
-    AvatarComponent
+    AvatarComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule
   ],
-  exports:[
+  exports: [
     ValidateMatchPatternDirective,
     ValidateSameValueDirective,
-    AvatarComponent
+    AvatarComponent,
+    LoaderComponent
   ]
 })
 export class SharedModule { }

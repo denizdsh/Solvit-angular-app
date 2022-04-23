@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { icons, patterns } from 'src/app/shared/util';
 import { UserService } from '../user.service';
 
@@ -13,7 +13,11 @@ import { UserService } from '../user.service';
 export class LoginFormComponent {
   passwordType: 'password' | 'text' = 'password';
 
-  constructor(private router: Router, private service: UserService) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private service: UserService
+  ) { }
 
   get icons() { return icons };
   get patterns() { return patterns };
@@ -27,11 +31,9 @@ export class LoginFormComponent {
 
     let { email, password } = form.value;
 
-    try {
-      this.service.login({ email: email.trim(), password: password.trim() });
-      this.router.navigate(['']);
-    } catch (e) {
-      window.alert(e);
-    }
+    this.service.login({ email: email.trim(), password: password.trim() }).subscribe({
+      next: () => this.router.navigate([this.activatedRoute.snapshot.queryParams['redirect'] || '/']),
+      error: () => window.alert('Couldn\'t log in')
+    });
   }
 }

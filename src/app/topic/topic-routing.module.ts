@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthActivate } from '../core/guards/auth.activate';
 import { TopicDetailsComponent } from './topic-details/topic-details.component';
 import { TopicsComponent } from './topics/topics.component';
 
@@ -7,7 +8,12 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: TopicsComponent
+    component: TopicsComponent,
+    canActivate: [AuthActivate],
+    data: {
+      authRequired: true,
+      authFailureRedirectUrl: '/all'
+    }
   },
   {
     path: 'all',
@@ -17,7 +23,12 @@ const routes: Routes = [
   {
     path: 'saved',
     pathMatch: 'full',
-    component: TopicsComponent
+    component: TopicsComponent,
+    canActivate: [AuthActivate],
+    data: {
+      authRequired: true,
+      authFailureRedirectUrl: '/user/login'
+    }
   },
   {
     path: 'c/:category',

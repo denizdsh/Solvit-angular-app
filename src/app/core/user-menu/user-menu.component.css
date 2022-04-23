@@ -18,10 +18,13 @@
     border: 2px solid #313846;
     border-radius: 20px;
     overflow: hidden;
+    padding-bottom: 3px;
+    background: #262A37;
 }
 
 .user-menu-links a:hover {
     background: none;
+    cursor: pointer;
 }
 
 .user-menu-info, .user-menu-links {
@@ -38,10 +41,6 @@
 
 .user-menu-info p {
     margin: 15px 0px 5px 0px;
-}
-
-.user-menu-links {
-    background: #262A37;
 }
 
 .user-menu-links .dropdown-content-link {
@@ -86,7 +85,7 @@
     content: '';
     display: block;
     position: absolute;
-    bottom: 8px;
+    bottom: 7px;
     left: 50%;
     transform: translate(-50%, 0%);
     width: 0px;
@@ -98,7 +97,7 @@
 }
 
 .dropdown-content-link:hover::after {
-    width: 50% !important;
+    width: 40% !important;
 }
 
 @media all and (max-width: 750px) {

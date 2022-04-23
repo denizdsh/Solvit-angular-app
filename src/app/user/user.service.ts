@@ -4,6 +4,7 @@ import { IUser } from '../interfaces';
 import { environment as env } from '../../environments/environment'
 import { LocalStorage } from '../core/injection-tokens';
 import { category } from '../shared/util';
+import { finalize, Observable, tap } from 'rxjs';
 
 const thisUserUrl = `${env.API_URL}/u/me`;
 const userActionUrl = `${env.API_URL}/user-action`;
@@ -23,10 +24,14 @@ export class UserService {
     this.accessToken = this.localStorage.getItem('accessToken');
   }
 
+  get isAuth(): boolean { return !!this.accessToken; };
+
   private handleUserAuth(user: IUser, isNewUser = false) {
+    console.log('loggedin')
     this.localStorage.setItem('accessToken', user.accessToken);
     this.accessToken = user.accessToken;
     this.user = user;
+
 
     if (isNewUser) return;
 
@@ -40,7 +45,10 @@ export class UserService {
         next: (user: IUser) => {
           this.handleUserAuth(user);
         },
-        error: (err) => { console.error(err); },
+        error: (err) => {
+          this.logout();
+          console.error(err);
+        },
         complete: () => { this.isAuthProcessFinished = true; }
       });
     } else {
@@ -48,28 +56,24 @@ export class UserService {
     }
   }
 
-  login(body: { email: string, password: string }): void {
+  login(body: { email: string, password: string }): Observable<IUser> {
     this.isAuthProcessFinished = false;
 
-    this.http.post<IUser>(`${env.API_URL}/login`, body).subscribe({
-      next: (user: IUser) => {
-        this.handleUserAuth(user);
-      },
-      error: (err) => { throw err },
-      complete: () => { this.isAuthProcessFinished = true; }
-    });
+    return this.http.post<IUser>(`${env.API_URL}/login`, body)
+      .pipe(
+        tap(user => { console.log(user); this.handleUserAuth(user) }),
+        finalize(() => this.isAuthProcessFinished = true)
+      );
   }
 
-  register(body: { email: string, password: string }): void {
+  register(body: { email: string, username: string, password: string, repassword: string, imageUrl: string | undefined }): Observable<IUser> {
     this.isAuthProcessFinished = false;
 
-    this.http.post<IUser>(`${env.API_URL}/register`, body).subscribe({
-      next: (user: IUser) => {
-        this.handleUserAuth(user, true);
-      },
-      error: (err) => { throw err },
-      complete: () => { this.isAuthProcessFinished = true; }
-    });
+    return this.http.post<IUser>(`${env.API_URL}/register`, body)
+      .pipe(
+        tap(user => this.handleUserAuth(user)),
+        finalize(() => this.isAuthProcessFinished = true)
+      );
   }
 
   logout(): void {
@@ -94,7 +98,6 @@ export class UserService {
       error: (err) => console.error(err)
     })
   }
-
 
   followCategory(category: category): void {
     this.http.post<category[]>(`${userActionUrl}/follow/${category}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
@@ -122,5 +125,9 @@ export class UserService {
       next: (topics) => this.savedTopics = topics,
       error: (err) => console.error(err)
     })
+  }
+
+  getUserImage(username: string): Observable<URL> {
+    return this.http.get<URL>(`${env.API_URL}/u/${username}/image`);
   }
 }

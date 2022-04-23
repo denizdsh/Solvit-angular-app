@@ -14,34 +14,23 @@
                 Categories <fa-icon [icon]="icons.caretDown"></fa-icon>
             </button>
             <article class="dropdown-content">
-                <a routerLink="/c/javascript"
-                    [class]="'dropdown-content-link' + activeLink('/c/javascript')">JavaScript</a>
-                <a routerLink="/c/java" [class]="'dropdown-content-link' + activeLink('/c/java')">Java</a>
-                <a routerLink="/c/csharp" [class]="'dropdown-content-link' + activeLink('/c/csharp')">C#</a>
-                <a routerLink="/c/python" [class]="'dropdown-content-link' + activeLink('/c/python')">Python</a>
-                <a routerLink="/c/c++" [class]="'dropdown-content-link' + activeLink('/c/c++')">C++</a>
-                <a routerLink="/c/php" [class]="'dropdown-content-link' + activeLink('/c/php')">PHP</a>
-                <a routerLink="/c/devops" [class]="'dropdown-content-link' + activeLink('/c/devops')">DevOps</a>
-                <a routerLink="/c/qa" [class]="'dropdown-content-link' + activeLink('/c/qa')">QA</a>
+                <a *ngFor="let category of mainCategories" [routerLink]="'/c/' + category"
+                    [class]="'dropdown-content-link' + activeLink('/c/' + category)">{{formatCategory(category)}}</a>
 
                 <a routerLink="/c/front-end" class="dropdown-content-link inner-dropdown-btn">
                     Front-end <fa-icon [icon]="icons.caretDown"></fa-icon>
                 </a>
                 <article class="inner-dropdown-content">
-                    <a routerLink="/c/react" [class]="'dropdown-content-link' + activeLink('/c/react')">React</a>
-                    <a routerLink="/c/jquery" [class]="'dropdown-content-link' + activeLink('/c/jquery')">jQuery</a>
-                    <a routerLink="/c/angular" [class]="'dropdown-content-link' + activeLink('/c/angular')">Angular</a>
-                    <a routerLink="/c/vue.js" [class]="'dropdown-content-link' + activeLink('/c/vue.js')">Vue.js</a>
+                    <a *ngFor="let feCategory of frontEnd" [routerLink]="'/c/' + feCategory"
+                        [class]="'dropdown-content-link' + activeLink('/c/' + feCategory)">{{formatCategory(feCategory)}}</a>
                 </article>
 
                 <a routerLink="/c/back-end" class="dropdown-content-link inner-dropdown-btn">
                     Back-end <fa-icon [icon]="icons.caretDown"></fa-icon>
                 </a>
                 <article class="inner-dropdown-content">
-                    <a routerLink="/c/node.js" [class]="'dropdown-content-link' + activeLink('/c/node.js')">Node.js</a>
-                    <a routerLink="/c/spring" [class]="'dropdown-content-link' + activeLink('/c/spring')">Spring</a>
-                    <a routerLink="/c/asp.net" [class]="'dropdown-content-link' + activeLink('/c/asp.net')">ASP.NET</a>
-                    <a routerLink="/c/django" [class]="'dropdown-content-link' + activeLink('/c/django')">Django</a>
+                    <a *ngFor="let beCategory of backEnd" [routerLink]="'/c/' + beCategory"
+                        [class]="'dropdown-content-link' + activeLink('/c/' + beCategory)">{{formatCategory(beCategory)}}</a>
                 </article>
 
                 <a routerLink="/c/other" [class]="'dropdown-content-link' + activeLink('/other')">Other</a>

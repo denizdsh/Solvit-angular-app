@@ -1,7 +1,7 @@
 <article class="user-menu" [@userMenu]="userMenuIsOpen ? 'open' : 'closed'">
     <article class="user-menu-info">
-        <app-avatar size="9rem" [image]="user.imageUrl" [alt]="user.username[0]"
-            customStyle="background-color: rgb(50,61,87);"></app-avatar>
+        <app-avatar size="9rem" [image]="user.imageUrl" [alt]="user.username[0]" customStyle="cursor: default;">
+        </app-avatar>
         <p class="user-menu-info-username">{{user.username}}</p>
         <p class="user-menu-info-email">({{user.email}})</p>
     </article>

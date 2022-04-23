@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { state, style, transition, trigger, animate } from '@angular/animations';
-import { icons } from 'src/app/shared/util';
+import { category, icons, mainCategories, subCategories, formatCategory } from 'src/app/shared/util';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
@@ -47,9 +47,12 @@ export class HeaderComponent implements OnInit {
   activeCategoryMenu: ' active-dropdown-menu' | '' = '';
   userMenuIsOpen: boolean = false;
 
-
   constructor(private router: Router, private renderer: Renderer2, private userService: UserService) { }
 
+  get mainCategories(): category[] { return mainCategories.filter(c => c !== 'front-end' && c !== 'back-end' && c !== 'other'); }
+  get frontEnd(): category[] { return subCategories['front-end']; }
+  get backEnd(): category[] { return subCategories['back-end']; }
+  get formatCategory(): Function { return formatCategory }
   get isAuth(): boolean { return !!this.userService.user };
 
   ngOnInit(): void {
