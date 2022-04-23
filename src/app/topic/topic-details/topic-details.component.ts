@@ -37,7 +37,10 @@ export class TopicDetailsComponent implements OnInit {
           console.log(topic);
           this.topic = topic;
         },
-        error: (err) => window.alert(err.message)
+        error: (err) => {
+          this.router.navigate(['/']);
+          console.error(err.message)
+        }
       }
     )
   }

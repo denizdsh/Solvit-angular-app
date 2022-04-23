@@ -1,22 +1,18 @@
-<app-loader class="no-posts-message"></app-loader>
-<!-- *ngIf="isLoading" -->
+<app-loader *ngIf="isLoading" class="no-posts-message"></app-loader>
 <!-- {showCreateTopicLink &&
     <Routes>
         <Route path="create" element={<CreateTopic />} />
     </Routes>} -->
 <section class="content">
     <!-- <aside> -->
-        <!-- {showBrowseCategories && <BrowseCategoriesAside />} -->
-        <!-- {(showAside && topics?.length > 0) && <Aside />} -->
+    <!-- {showBrowseCategories && <BrowseCategoriesAside />} -->
+    <!-- {(showAside && topics?.length > 0) && <Aside />} -->
     <!-- </aside> -->
-    <section class="topics" *ngFor="let topic of topics">
-        <!-- {CustomHeading ? CustomHeading : <></>} -->
-        <!-- {showCreateTopicLink && <CreateTopicLink />} -->
-        <!-- {topics -->
-        <!-- ? topics.length > 0 -->
-        <!-- ? topics.map(topic => <TopicCard topic={topic} key={topic._id} isAuthenticated={isAuthenticated} user={user} fc={fc} st={st} />) -->
-        <!-- : <p class='no-posts-message'>{message}</p> -->
-        <!-- : <Spinner modalType='spinner' />} -->
-        <app-topic-card [topic]="topic"></app-topic-card>
+    <section class="topics">
+        <app-topic-heading [topicsType]="type" [content]="urlProp"></app-topic-heading>
+        <p *ngIf="!isLoading && topics!.length == 0" class="no-posts-message">
+            No topics yet. Be the first to post one!
+        </p>
+        <app-topic-card *ngFor="let topic of topics" [topic]="topic"></app-topic-card>
     </section>
 </section>

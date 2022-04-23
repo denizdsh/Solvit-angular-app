@@ -9,12 +9,17 @@ import { TopicsComponent } from './topics/topics.component';
 import { TopicRoutingModule } from './topic-routing.module';
 import { TopicCardComponent } from './topic-card/topic-card.component';
 import { TopicDetailsComponent } from './topic-details/topic-details.component';
+import { CreateTopicComponent } from './create-topic/create-topic.component';
+import { TopicHeadingComponent } from './topic-heading/topic-heading.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     TopicsComponent,
     TopicCardComponent,
-    TopicDetailsComponent
+    TopicDetailsComponent,
+    CreateTopicComponent,
+    TopicHeadingComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +27,7 @@ import { TopicDetailsComponent } from './topic-details/topic-details.component';
     MatButtonModule,
     FontAwesomeModule,
     TopicRoutingModule,
+    SharedModule
   ]
 })
 export class TopicModule { }

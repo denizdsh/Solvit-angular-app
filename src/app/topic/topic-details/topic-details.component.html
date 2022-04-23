@@ -20,7 +20,8 @@
         </article>
         <article class="topic-info-follow-category">
             <button *ngIf="followingCategories.includes(topic.category)" mat-button
-                class="topic-info-follow-category-btn unfollow-category-btn" (click)="unfollowHandler()">Following</button>
+                class="topic-info-follow-category-btn unfollow-category-btn"
+                (click)="unfollowHandler()">Following</button>
             <button *ngIf="!followingCategories.includes(topic.category)" mat-raised-button
                 class="topic-info-follow-category-btn" (click)="followHandler()">Follow</button>
         </article>

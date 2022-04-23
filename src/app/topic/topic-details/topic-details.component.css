@@ -87,6 +87,10 @@ a.topic-info-creation-posted-by-username:hover {
     margin-bottom: 2.5vh;
 }
 
+.topic-content-description-text{
+    margin: 0;
+}
+
 .topic-content-img-image {
     min-width: 30vw;
     max-width: 100%;
