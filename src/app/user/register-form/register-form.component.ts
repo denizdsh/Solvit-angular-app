@@ -1,7 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { icons, patterns } from 'src/app/shared/util';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register-form',
@@ -28,7 +30,11 @@ export class RegisterFormComponent {
   repasswordType: 'password' | 'text' = 'password';
   showImageInput: boolean = false;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private service: UserService
+  ) { }
 
   get icons() { return icons };
   get patterns() { return patterns };
@@ -51,6 +57,17 @@ export class RegisterFormComponent {
     if (form.invalid) return;
 
     const { email, username, password, repassword, imageUrl } = form.value;
-    console.log(email.trim(), username.trim(), password.trim(), repassword.trim(), imageUrl.trim())
+    console.log()
+
+    this.service.register({
+      email: email.trim(),
+      username: username.trim(),
+      password: password.trim(),
+      repassword: repassword.trim(),
+      imageUrl: imageUrl.trim()
+    }).subscribe({
+      next: () => this.router.parseUrl(this.activatedRoute.snapshot.queryParams['redirect'] || '/'),
+      error: (err) => window.alert(err[0])
+    });
   }
 }
