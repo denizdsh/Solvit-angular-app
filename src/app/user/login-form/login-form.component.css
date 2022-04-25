@@ -95,3 +95,9 @@
     outline: none;
     cursor: default;
 }
+
+.submit-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

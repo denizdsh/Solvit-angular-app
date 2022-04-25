@@ -1,23 +1,43 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IUser } from 'src/app/interfaces';
 import { icons } from 'src/app/shared/util';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
+  animations: [
+    trigger('toggleAvatarViewer', [
+      state('open', style({
+        height: '24rem'
+      })),
+      state('closed', style({
+        left: '50%',
+        height: '0rem'
+      })),
+      transition('open => closed', [animate('0.3s')]),
+      transition('closed => open', [animate('0.3s')])
+    ])
+  ]
 })
 export class AuthComponent {
-  isLogin: boolean;
   title: string;
   iconClassList: string;
+  type: 'login' | 'register' | 'edit-profile';
+  imageUrl: URL | undefined;
 
-  constructor(router: Router) {
-    this.isLogin = router.url.toString().includes('login');
-    this.title = this.isLogin ? 'Login' : 'Register';
+  constructor(activatedRoute: ActivatedRoute, private userService: UserService) {
+    this.type = activatedRoute.snapshot.data['authFormType'];
 
-    this.iconClassList = 'auth-bg-icon ' + (this.isLogin ? '' : 'auth-page-register')
+    this.title = this.type[0].toLocaleUpperCase().concat(this.type.replace('-', ' ').slice(1));
+
+    this.iconClassList = 'auth-bg-icon';
+    if (this.type === 'register') this.iconClassList += ' auth-page-register';
   }
 
   get icons() { return icons };
+  get user(): IUser | undefined { return this.userService.user; }
 }

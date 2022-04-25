@@ -4,22 +4,55 @@
     margin: 50px auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     background: #262A37;
     border: 2px solid #313846;
     border-radius: 30px;
 }
 
+.avatar-title-container {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-title-container .auth-title {
+    margin-left: 25px;
+}
+
+.avatar-viewer {
+    position: absolute;
+    right: calc(30vw - 10rem);
+    height: 24rem;
+    width: calc(9rem + 5px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    overflow: hidden;
+}
+
+.avatar-viewer, .avatar-viewer * {
+    z-index: -1;
+}
+
 @media all and (max-width: 1450px) {
     .auth-section {
         width: 60vw;
+    }
+
+    .avatar-viewer {
+        right: calc(20vw - 10rem);
     }
 }
 
 @media all and (max-width: 900px) {
     .auth-section {
         width: 70vw;
+    }
+
+    .avatar-viewer {
+        display: none;
     }
 }
 
@@ -62,7 +95,7 @@
     font-size: 14rem;
     color: #323d57;
     position: absolute;
-    z-index: -1;
+    z-index: -2;
 }
 
 .auth-top-left-icon {

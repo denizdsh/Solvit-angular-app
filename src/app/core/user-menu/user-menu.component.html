@@ -1,13 +1,13 @@
 <article class="user-menu" [@userMenu]="userMenuIsOpen ? 'open' : 'closed'">
     <article class="user-menu-info">
-        <app-avatar size="9rem" [image]="user.imageUrl" [alt]="user.username[0]" customStyle="cursor: default;">
+        <app-avatar size="9rem" [image]="user.imageUrl" [alt]="user.username[0]">
         </app-avatar>
         <p class="user-menu-info-username">{{user.username}}</p>
         <p class="user-menu-info-email">({{user.email}})</p>
     </article>
     <article class="user-menu-links">
         <a [routerLink]="'/u/' + user.username" class="dropdown-content-link">My Topics</a>
-        <a routerLink='/user/edit-profile' class="dropdown-content-link">Edit Avatar</a>
+        <a routerLink='/user/profile/edit' class="dropdown-content-link">Edit Profile</a>
         <a (click)="logout()" class="dropdown-content-link">Logout</a>
     </article>
 </article>

@@ -110,14 +110,14 @@
             </label>
             <div [@openClose]="showImageInput? 'open' : 'closed'">
                 <input ngModel #imageUrl="ngModel" class="auth-form-input" type='url' id="imageUrl" name="imageUrl"
-                    placeholder='www.image.com' [matchPattern]="patterns.url" />
+                    placeholder='www.image.com' [matchPattern]="patterns.url" (input)="emitImageUrl(imageUrl.value.trim())" />
                 <a class="link-to-imgur" href="https://imgur.com/upload" target="_blank" rel="noreferrer">
                     You can upload your image here...
                 </a>
             </div>
         </div>
     </div>
-    <div>
+    <div class="submit-container">
         <input class="auth-form-submit" type="submit" value="Register" [disabled]="form.invalid" />
         <a class="link-to-other-auth" routerLink="/user/login">
             Already have an account?

@@ -19,12 +19,18 @@ export class UserService {
   savedTopics: string[] = [];
   isAuthProcessFinished: boolean = false;
 
+
   constructor(@Inject(LocalStorage) private localStorage: Window['localStorage'],
     private http: HttpClient) {
     this.accessToken = this.localStorage.getItem('accessToken');
   }
 
   get isAuth(): boolean { return !!this.accessToken; };
+  get authHeaderOptions() {
+    return {
+      headers: { 'x-authorization': this.user!.accessToken }
+    }
+  }
 
   private handleUserAuth(user: IUser, isNewUser = false) {
     console.log('loggedin')
@@ -84,44 +90,54 @@ export class UserService {
     this.savedTopics = [];
   }
 
+  editProfile(body: { username: string, imageUrl: string | undefined, password: string }): Observable<IUser> {
+    this.isAuthProcessFinished = false;
+
+    return this.http.post<IUser>(`${env.API_URL}/edit-profile`, body, this.authHeaderOptions)
+      .pipe(
+        tap(user => this.handleUserAuth(user)),
+        finalize(() => this.isAuthProcessFinished = true)
+      );
+  }
+
 
   getFollowingCategories(): void {
-    this.http.get<category[]>(`${thisUserUrl}/following-categories`, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+    this.http.get<category[]>(`${thisUserUrl}/following-categories`, this.authHeaderOptions).subscribe({
       next: (categories) => this.followingCategories = categories,
       error: (err) => console.error(err)
     })
   }
 
   getSavedTopics(): void {
-    this.http.get<category[]>(`${thisUserUrl}/saved-topics`, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+    this.http.get<category[]>(`${thisUserUrl}/saved-topics`, this.authHeaderOptions).subscribe({
       next: (topics) => this.savedTopics = topics,
       error: (err) => console.error(err)
     })
   }
 
   followCategory(category: category): void {
-    this.http.post<category[]>(`${userActionUrl}/follow/${category}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+    this.http.post<category[]>(`${userActionUrl}/follow/${category}`, {}, this.authHeaderOptions).subscribe({
       next: (categories) => this.followingCategories = categories,
       error: (err) => console.error(err)
     })
   }
 
   unfollowCategory(category: category): void {
-    this.http.post<category[]>(`${userActionUrl}/unfollow/${category}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+    this.http.post<category[]>(`${userActionUrl}/unfollow/${category}`, {}, this.authHeaderOptions).subscribe({
       next: (categories) => this.followingCategories = categories,
       error: (err) => console.error(err)
     })
   }
 
   saveTopic(topicId: string): void {
-    this.http.post<string[]>(`${userActionUrl}/save/${topicId}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+    this.http.post<string[]>(`${userActionUrl}/save/${topicId}`, {}, this.authHeaderOptions).subscribe({
       next: (topics) => this.savedTopics = topics,
       error: (err) => console.error(err)
     })
   }
 
   unsaveTopic(topicId: string): void {
-    this.http.post<string[]>(`${userActionUrl}/unsave/${topicId}`, {}, { headers: { 'x-authorization': this.user!.accessToken } }).subscribe({
+    this.http.post<string[]>(`${userActionUrl}/unsave/${topicId}`, {}, this.authHeaderOptions).subscribe({
       next: (topics) => this.savedTopics = topics,
       error: (err) => console.error(err)
     })

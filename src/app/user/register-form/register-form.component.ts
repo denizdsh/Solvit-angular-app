@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { icons, patterns } from 'src/app/shared/util';
@@ -36,6 +36,8 @@ import { UserService } from '../user.service';
   ]
 })
 export class RegisterFormComponent {
+  @Output() imageUrlEmitter: EventEmitter<URL> = new EventEmitter();
+
   passwordType: 'password' | 'text' = 'password';
   repasswordType: 'password' | 'text' = 'password';
   showImageInput: boolean = false;
@@ -48,7 +50,6 @@ export class RegisterFormComponent {
 
   get icons() { return icons };
   get patterns() { return patterns };
-
 
   togglePasswordVisibilityHandler(isRepassword: any = false): void {
     if (isRepassword) {
@@ -63,11 +64,15 @@ export class RegisterFormComponent {
     this.showImageInput = !this.showImageInput;
   }
 
+  emitImageUrl(url: string): void {
+    if (url === url.match(patterns.url)?.[0]) this.imageUrlEmitter.emit(url as unknown as URL);
+    else this.imageUrlEmitter.emit(undefined);
+  }
+
   registerHandler(form: NgForm): void {
     if (form.invalid) return;
 
     const { email, username, password, repassword, imageUrl } = form.value;
-    console.log()
 
     this.service.register({
       email: email.trim(),

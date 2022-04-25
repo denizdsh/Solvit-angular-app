@@ -1,0 +1,131 @@
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: auto;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.auth-form div {
+    width: 100%;
+    margin: 15px auto;
+    position: relative;
+}
+
+.auth-form-label {
+    font-size: 1.1rem;
+    padding-left: 5px;
+}
+
+.auth-form-input {
+    font-size: 1.2rem;
+    color: inherit;
+    background: #282C34;
+    border: 1px solid #313846;
+    border-radius: 8px;
+    outline: none;
+    padding: 15px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.auth-form-input:focus {
+    outline: 2px solid #313846;
+}
+
+.auth-form-password-label-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.fa-eye, .fa-eye-slash {
+    font-size: 1.2rem;
+    color: inherit;
+}
+
+.fa-eye-slash {
+    color: gray;
+}
+
+.auth-form-submit {
+    outline: none;
+    border: 2px solid #313846;
+    font-size: inherit;
+    color: inherit;
+    background: #282C34;
+    border-radius: 30px;
+    padding: 8px 25px;
+}
+
+.auth-form-submit:hover {
+    outline: 1px solid #313846;
+    cursor: pointer;
+}
+
+.auth-form-imageUrl-label:hover {
+    cursor: pointer;
+}
+
+.link-to-other-auth {
+    color: #86D6F9;
+    text-decoration: none;
+    padding-left: 10px;
+}
+
+.avatar-icon {
+    user-select: none;
+}
+
+.avatar-error {
+    bottom: calc(2.4rem + 60px);
+    z-index: 1;
+}
+
+.avatar-error.closed::after {
+    display: none;
+}
+
+.auth-form-see-password {
+    user-select: none;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    background: #282C34;
+}
+
+.auth-form-input.ng-touched.ng-invalid {
+    border: 1px solid #B40F12;
+}
+
+.auth-form-submit:active {
+    position: relative;
+    top: 2px;
+}
+
+.auth-form-submit:disabled {
+    color: gray;
+    background-color: #262A37;
+}
+
+.auth-form-submit:disabled:hover {
+    outline: none;
+    cursor: default;
+}
+
+.no-style {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.submit-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -9,23 +9,30 @@ const routes: Routes = [
     pathMatch: 'full',
     component: AuthComponent,
     canActivate: [AuthActivate],
-    data: { authRequired: false }
+    data: {
+      authRequired: false,
+      authFormType: 'login'
+    }
   },
   {
     path: 'register',
     pathMatch: 'full',
     component: AuthComponent,
     canActivate: [AuthActivate],
-    data: { authRequired: false }
+    data: {
+      authRequired: false,
+      authFormType: 'register'
+    }
   },
   {
-    path: 'edit-profile',
+    path: 'profile/edit',
     pathMatch: 'full',
     component: AuthComponent,
     canActivate: [AuthActivate],
     data: {
       authRequired: true,
-      authFailureRedirectUrl: '/user/login'
+      authFailureRedirectUrl: '/user/login',
+      authFormType: 'edit-profile'
     }
   }
 ]

@@ -118,3 +118,9 @@
     margin: 0 !important;
     padding: 0 !important;
 }
+
+.submit-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

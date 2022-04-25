@@ -1,1 +1,80 @@
-<p>edit-profile works!</p>
+<form #form="ngForm" class="auth-form" (ngSubmit)="editProfileHandler(form)">
+    <div>
+        <!-- errors -->
+        <article class="error-popup" *ngIf="username.errors && username.touched">
+            <p class="error-popup-content">
+                <ng-container *ngIf="username.errors['required'] || username.errors['pattern']">
+                    Username is required
+                </ng-container>
+            </p>
+        </article>
+        <!--  -->
+        <label class="auth-form-label" for="username">Username<span class="required-asterisk">*</span></label>
+        <input [ngModel]="user?.username" #username="ngModel" class="auth-form-input" type="username" id="username" name="username"
+            placeholder="John Doe" required pattern=".*[\S]+.*" />
+    </div>
+
+    <div class="no-style">
+        <!-- errors -->
+        <article [@avatarError]="showImageInput? 'open' : 'closed'"
+            [ngClass]="['error-popup', 'avatar-error', showImageInput? '' : 'closed']"
+            *ngIf="imageUrl.errors && imageUrl.touched">
+            <p class="error-popup-content">
+                <ng-container *ngIf="imageUrl.errors['matchPattern']">
+                    URL must start with HTTP
+                </ng-container>
+            </p>
+        </article>
+        <!--  -->
+        <div class="avatar-icon">
+            <label class="auth-form-label auth-form-imageUrl-label" for="imageUrl"
+                (click)="toggleShowImageInputHandler()">
+                Avatar icon
+                <fa-icon [icon]="icons.caretRight" *ngIf="!showImageInput"></fa-icon>
+                <fa-icon [icon]="icons.caretDown" *ngIf="showImageInput"></fa-icon>
+            </label>
+            <div [@openClose]="showImageInput? 'open' : 'closed'">
+                <input [ngModel]="user?.imageUrl" #imageUrl="ngModel" class="auth-form-input" type='url' id="imageUrl" name="imageUrl"
+                    placeholder='www.image.com' [matchPattern]="patterns.url"
+                    (input)="emitImageUrl(imageUrl.value.trim())">
+                <a class="link-to-imgur" href="https://imgur.com/upload" target="_blank" rel="noreferrer">
+                    You can upload your image here...
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!-- errors -->
+        <article class="error-popup" *ngIf="password.errors && password.touched">
+            <p class="error-popup-content">
+                <ng-container *ngIf="password.errors['required']; else minlengthPassword">
+                    Password is required
+                </ng-container>
+                <ng-template #minlengthPassword>
+                    <ng-container *ngIf="password.errors['minlength']; else patternPassword">
+                        Password should be at least 6 characters long
+                    </ng-container>
+                </ng-template>
+                <ng-template #patternPassword>
+                    <ng-container *ngIf="password.errors['matchPattern']">
+                        Password can only consist of letters, digits and common symbols
+                    </ng-container>
+                </ng-template>
+            </p>
+        </article>
+        <!--  -->
+        <article class="auth-form-password-label-wrap">
+            <label class="auth-form-label" for="password">Password<span class="required-asterisk">*</span></label>
+        </article>
+        <article class="auth-form-see-password" (click)="togglePasswordVisibilityHandler()">
+            <fa-icon *ngIf="passwordType === 'password'" [icon]="icons.crossedEye" class="fa-eye-slash"></fa-icon>
+            <fa-icon *ngIf="passwordType !== 'password'" [icon]="icons.eye" class="fa-eye"></fa-icon>
+        </article>
+        <input ngModel #password="ngModel" class="auth-form-input" [type]="passwordType" id="password" name="password"
+            required [minlength]="6" [matchPattern]="patterns.password" />
+    </div>
+    <div class="submit-container">
+        <input class="auth-form-submit" type="submit" value="Edit Profile" [disabled]="form.invalid" />
+    </div>
+</form>

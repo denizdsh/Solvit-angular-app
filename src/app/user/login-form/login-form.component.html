@@ -48,7 +48,7 @@
         <input ngModel #password="ngModel" class="auth-form-input" [type]="passwordType" id="password" name="password"
             required [minlength]="6" [matchPattern]="patterns.password" />
     </div>
-    <div>
+    <div class="submit-container">
         <input class="auth-form-submit" type="submit" value="Login" [disabled]="form.invalid" />
         <a class="link-to-other-auth" routerLink="/user/register">
             Don't have an account yet?
