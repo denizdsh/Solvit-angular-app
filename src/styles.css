@@ -127,7 +127,7 @@ div.mat-form-field-wrapper {
     padding-bottom: 0;
 }
 
-.mat-error {
+.mat-error, .mat-hint {
     margin-top: 1rem;
 }
 

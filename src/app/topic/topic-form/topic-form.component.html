@@ -69,7 +69,7 @@
                 <section class="last">
                     <mat-form-field class="form-field" appearance="fill" color="accent">
                         <mat-label>Category</mat-label>
-                        <mat-select [formControl]="categoryControl" [ngModel]="topic?.category">
+                        <mat-select [formControl]="categoryControl" [ngModel]="topic?.category || defaultCategory">
                             <mat-optgroup *ngFor="let group of categoryGroups" [label]="group.title">
                                 <mat-option *ngFor="let category of group.categories" [value]="category.value">
                                     {{category.viewValue}}

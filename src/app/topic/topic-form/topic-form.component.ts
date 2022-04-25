@@ -35,7 +35,7 @@ export class TopicFormComponent implements OnInit {
   @Output() closeCreateTopic: EventEmitter<boolean> = new EventEmitter();
   @Output() topicData: EventEmitter<ITopicData> = new EventEmitter();
   @ViewChild('modal') modal!: ElementRef;
-
+  defaultCategory: category | undefined;
   modalListener!: () => void;
   // modalRouterSubscription!: Subscription;
   // currentUrl!: string;
@@ -58,12 +58,15 @@ export class TopicFormComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private renderer: Renderer2,
     public dialog: MatDialog) {
     // this.currentUrl = this.router.routerState.snapshot.url;
+    if (!this.topic)
+      this.defaultCategory = this.activatedRoute.snapshot.params['category'];
   }
   get patterns() { return patterns; }
-
+  get formatCategory(): Function { return formatCategory; }
   ngOnInit(): void {
     this.modalListener = this.renderer.listen('window', 'click', (e: PointerEvent): void => {
       if (e.target === this.modal.nativeElement) {
