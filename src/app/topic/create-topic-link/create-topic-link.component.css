@@ -1,0 +1,24 @@
+.create-topic-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #262A37;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.create-topic-link-input {
+    font-size: inherit;
+    background: #282C34;
+    color: inherit;
+    margin-left: 15px;
+    width: 88%;
+    border: 1px solid #313846;
+    border-radius: 10px;
+    padding: 10px;
+    outline: none;
+}
+
+.create-topic-link:hover{
+    outline: 1px solid #313846;
+}

@@ -78,3 +78,75 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/* form */
+.required-asterisk {
+    font-size: 0.75rem;
+    position: relative;
+    bottom: 5px;
+    color: rgb(158, 50, 50);
+    margin-left: 1px;
+}
+
+/* form errors */
+.error-popup {
+    user-select: none;
+    position: absolute;
+    bottom: calc(1.2rem + 44px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: fit-content;
+    padding: 4px 8px;
+    background: rgb(202, 38, 38);
+    color: inherit;
+    border-radius: 4px;
+    font-weight: 400;
+}
+
+.error-popup::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 90%;
+    border: 12px solid transparent;
+    transform: translate(-50%, 0px);
+    border-top-color: rgb(202, 38, 38);
+}
+
+p.error-popup-content {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+/* topic form - category select */
+.mat-form-field {
+    min-width: 30%;
+}
+
+div.mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+.mat-error {
+    margin-top: 1rem;
+}
+
+.mat-form-field-underline {
+    bottom: auto;
+}
+
+.mat-form-field-flex {
+    padding: 0.45rem 0.45rem 0 0.45rem !important;
+}
+
+.mat-form-field-infix {
+    padding-bottom: 0.5rem !important;
+}
+
+.mat-option {
+    height: 2.55rem !important;
+}
+
+.mat-optgroup-label {
+    height: 2.6rem !important;
+}

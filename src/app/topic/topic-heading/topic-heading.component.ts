@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { IUser } from 'src/app/interfaces';
 import { UserService } from 'src/app/user/user.service';
-import { category, topicType, formatCategory } from 'src/app/shared/util';
+import { topicType, formatCategory } from 'src/app/shared/util';
 import { Router } from '@angular/router';
 
 type headingType = 'underlined' | 'user' | null;
@@ -28,7 +27,7 @@ export class TopicHeadingComponent implements OnChanges {
   constructor(private router: Router, private userService: UserService) { }
   get formatCategory(): Function { return formatCategory; }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.type = heading[this.topicsType] as headingType;
     if (!this.content) this.content = this.topicsType;
 

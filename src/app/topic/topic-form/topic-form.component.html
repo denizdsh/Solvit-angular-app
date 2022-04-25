@@ -1,0 +1,91 @@
+<div class="modal" #modal>
+    <div class="container">
+        <h1 class="topic-form-title">{{title}}</h1>
+        <section class="create-edit-topic">
+            <form #form="ngForm" class="topic-form" (ngSubmit)="submitHandler(form)">
+                <article class="form-item">
+                    <!-- errors -->
+                    <article class="error-popup" *ngIf="titleModel.errors && titleModel.touched">
+                        <p class="error-popup-content">
+                            <ng-container *ngIf="titleModel.errors['required']; else titleMaxLength">
+                                Title is required
+                            </ng-container>
+                            <ng-template #titleMaxLength>
+                                <ng-container *ngIf="titleModel.errors['maxlength']">
+                                    Title can be up to 200 characters long
+                                </ng-container>
+                            </ng-template>
+                        </p>
+                    </article>
+                    <!--  -->
+                    <label class="topic-form-label" for="topic-title">Title<span
+                            class="required-asterisk">*</span></label>
+                    <input [ngModel]="topic?.title || ''" #titleModel="ngModel" type="text" name="title"
+                        id="topic-title" class="topic-form-input" placeholder='Title' required [maxlength]="200" />
+                </article>
+
+                <article class="form-item">
+                    <!-- errors -->
+                    <article class="error-popup" *ngIf="description.errors && description.touched">
+                        <p class="error-popup-content">
+                            <ng-container *ngIf="description.errors['required']; else descriptionMaxLength">
+                                Description is required
+                            </ng-container>
+                            <ng-template #descriptionMaxLength>
+                                <ng-container *ngIf="description.errors['maxlength']">
+                                    Description can be up to 1500 characters long
+                                </ng-container>
+                            </ng-template>
+                        </p>
+                    </article>
+                    <!--  -->
+                    <label class="topic-form-label" for="topic-description">Description<span
+                            class="required-asterisk">*</span></label>
+                    <textarea [ngModel]="topic?.description || ''" #description="ngModel" name="description"
+                        id="topic-description" class="topic-form-textarea topic-form-input" placeholder='Description'
+                        required [maxlength]="1500"></textarea>
+                </article>
+
+                <article class="form-item">
+                    <!-- errors -->
+                    <article class="error-popup" *ngIf="imageUrl.errors && imageUrl.touched">
+                        <p class="error-popup-content">
+                            <ng-container *ngIf="imageUrl.errors['matchPattern']">
+                                URL must start with HTTP
+                            </ng-container>
+                        </p>
+                    </article>
+                    <!--  -->
+                    <label class="topic-form-label" for="topic-imageUrl">Image url</label>
+                    <input [ngModel]="topic?.imageUrl || ''" #imageUrl="ngModel" type="url" name="imageUrl"
+                        id="topic-imageUrl" class="topic-form-input" placeholder='https:// ...'
+                        [matchPattern]="patterns.url" />
+                    <a class="link-to-imgur" href="https://imgur.com/upload" target="_blank" rel="noreferrer">
+                        You can upload your image here...
+                    </a>
+                </article>
+
+
+                <section class="last">
+                    <mat-form-field class="form-field" appearance="fill" color="accent">
+                        <mat-label>Category</mat-label>
+                        <mat-select [formControl]="categoryControl" [ngModel]="topic?.category">
+                            <mat-optgroup *ngFor="let group of categoryGroups" [label]="group.title">
+                                <mat-option *ngFor="let category of group.categories" [value]="category.value">
+                                    {{category.viewValue}}
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                        <mat-error *ngIf="categoryControl.hasError('required')">Select a category</mat-error>
+                        <mat-error *ngIf="categoryControl.hasError('isValidCategory')">Invalid category</mat-error>
+                    </mat-form-field>
+
+                    <button type="submit" mat-stroked-button color="accent"
+                        [disabled]="form.invalid || categoryControl.invalid"
+                        style="font-size: 1rem; padding: 0.7rem 1.2rem;">Post</button>
+                </section>
+            </form>
+        </section>
+    </div>
+
+</div>

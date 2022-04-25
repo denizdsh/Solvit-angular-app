@@ -14,14 +14,15 @@ import { UserService } from 'src/app/user/user.service';
         top: '120px',
         right: '100px',
         opacity: '100%',
-        fontSize: '1rem'
+        fontSize: '1rem',        
       })),
       state('closed', style({
         top: '0px',
         right: '0px',
         left: '99%',
         opacity: '0%',
-        fontSize: '0px'
+        fontSize: '0px',
+        width: 0
       })),
       transition('open => closed', [
         animate('0.1s')

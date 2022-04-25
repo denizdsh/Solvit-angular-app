@@ -1,8 +1,5 @@
 <app-loader *ngIf="isLoading" class="no-posts-message"></app-loader>
-<!-- {showCreateTopicLink &&
-    <Routes>
-        <Route path="create" element={<CreateTopic />} />
-    </Routes>} -->
+<app-create-topic (closeCreateTopic)="trigger = $event" *ngIf="trigger"></app-create-topic>
 <section class="content">
     <!-- <aside> -->
     <!-- {showBrowseCategories && <BrowseCategoriesAside />} -->
@@ -10,9 +7,11 @@
     <!-- </aside> -->
     <section class="topics">
         <app-topic-heading [topicsType]="type" [content]="urlProp"></app-topic-heading>
-        <p *ngIf="!isLoading && topics!.length == 0" class="no-posts-message">
-            No topics yet. Be the first to post one!
-        </p>
+        <app-create-topic-link *ngIf="type !== 'user'" (triggerCreateTopic)="trigger = $event"></app-create-topic-link>
+        <app-no-posts-message *ngIf="!isLoading && topics!.length == 0"
+            message="No topics yet. Be the first to post one!">
+        </app-no-posts-message>
+
         <app-topic-card *ngFor="let topic of topics" [topic]="topic"></app-topic-card>
     </section>
 </section>

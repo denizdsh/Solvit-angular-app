@@ -63,7 +63,6 @@ export class HeaderComponent implements OnInit {
         this.activeCategoryMenu = '';
       }
 
-
       if (this.isAuth) {
         if (e.target === this.avatar.nativeElement || this.avatar.nativeElement.contains(e.target)) {
           this.userMenuIsOpen = !this.userMenuIsOpen;

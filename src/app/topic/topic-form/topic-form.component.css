@@ -1,0 +1,114 @@
+.container {
+    width: fit-content;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.create-edit-topic {
+    width: 60vw;
+    height: fit-content;
+    margin: 8px auto;
+    padding: 0 20px;
+    background: #262A37;
+    border-radius: 15px;
+}
+
+.topic-form-title {
+    font-size: 1.8rem;
+    padding-left: 8px;
+    margin: 0px;
+    user-select: none;
+}
+
+@media all and (max-width: 1400px) {
+    .create-edit-topic {
+        width: 80vw;
+    }
+}
+
+.topic-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.form-item, .topic-form section {
+    width: 100%;
+    height: fit-content;
+    margin: 20px auto;
+}
+
+.form-item {
+    position: relative;
+}
+
+.form-item .error-popup {
+    bottom: auto;
+    top: -16px;
+}
+
+.topic-form section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topic-form section.last {
+    margin-bottom: 1.3rem;
+}
+
+.topic-form-label {
+    padding-left: 6px;
+    font-size: 0.9rem;
+}
+
+.topic-form-input {
+    font-size: inherit;
+    color: inherit;
+    background: #282C34;
+    width: 100%;
+    border: 1px solid #313846;
+    border-radius: 10px;
+    padding: 10px;
+    outline: none;
+}
+
+.topic-form-input:focus {
+    border-color: #86D6F9;
+}
+
+.topic-form-textarea {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 15vh;
+}
+
+.link-to-imgur {
+    font-size: 0.9rem;
+    color: rgb(117, 171, 189);
+    padding-left: 8px;
+}
+
+.topic-form-submit {
+    font-size: 1.05rem;
+    height: fit-content;
+    padding: 8px 16px;
+    color: inherit;
+    background: #1d88c2;
+    outline: none;
+    border: 2px solid #313846;
+    border-radius: 20px;
+}
+
+.topic-form-submit:hover {
+    cursor: pointer;
+}
+
+.topic-form-submit:active {
+    background: #4b8299;
+}

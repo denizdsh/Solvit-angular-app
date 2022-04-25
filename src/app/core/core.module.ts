@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from '../shared/shared.module';
 import { UserMenuComponent } from './user-menu/user-menu.component';
-import { LocalStorage } from './injection-tokens';
+import { LocalStorage } from '../injection-tokens';
 
 @NgModule({
   declarations: [

@@ -25,6 +25,7 @@ export class TopicsComponent implements OnInit {
   urlProp!: urlProp;
   topics: ITopic[] | undefined;
   isLoading: boolean = true;
+  trigger: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,7 +44,7 @@ export class TopicsComponent implements OnInit {
       }
     })
   }
-
+  
   private updateTopics() {
     this.service.getTopics[this.type](this.urlProp).subscribe({
       next: (data) => {

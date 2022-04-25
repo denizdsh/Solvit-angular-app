@@ -14,6 +14,7 @@ import { TopicService } from '../topic.service';
 export class TopicDetailsComponent implements OnInit {
   topic!: ITopic;
   topicId: string | null;
+  trigger: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private service: TopicService, private userService: UserService) {
     this.topicId = this.route.snapshot.paramMap.get('topicId');
@@ -34,7 +35,6 @@ export class TopicDetailsComponent implements OnInit {
     this.service.getTopicById(this.topicId).subscribe(
       {
         next: (topic) => {
-          console.log(topic);
           this.topic = topic;
         },
         error: (err) => {

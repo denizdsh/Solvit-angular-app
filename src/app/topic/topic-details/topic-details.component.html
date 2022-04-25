@@ -1,5 +1,7 @@
 <!-- topic._id -->
 <!-- ? -->
+<app-edit-topic *ngIf="isOwner && trigger && !!topic" [topicInput]="topic" (closeCreateTopic)="trigger = $event"></app-edit-topic>
+
 <section class="topic">
     <article class="topic-info ">
         <article class="topic-info-creation-wrap">
@@ -67,7 +69,7 @@
 
             <ng-container *ngIf="isOwner">
                 <li class="topic-functionality-list-item topic-functionality-list-item-edit" (click)="handler()">
-                    <button mat-button routerLink='edit' class='owner-functionality-button button-edit'>
+                    <button mat-button class='owner-functionality-button button-edit' (click)="trigger = true">
                         Edit
                         <fa-icon [icon]="icons.edit" class="fas fa-pencil-alt"></fa-icon>
                     </button>

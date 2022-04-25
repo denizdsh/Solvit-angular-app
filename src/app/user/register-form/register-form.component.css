@@ -78,12 +78,13 @@
     user-select: none;
 }
 
-.required-asterisk {
-    font-size: 0.75rem;
-    position: relative;
-    bottom: 5px;
-    color: rgb(158, 50, 50);
-    margin-left: 1px;
+.avatar-error {
+    bottom: calc(2.4rem + 60px);
+    z-index: 1;
+}
+
+.avatar-error.closed::after {
+    display: none;
 }
 
 .auth-form-see-password {
@@ -96,34 +97,6 @@
 
 .auth-form-input.ng-touched.ng-invalid {
     border: 1px solid #B40F12;
-}
-
-.error-popup {
-    user-select: none;
-    position: absolute;
-    bottom: calc(1.2rem + 44px);
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: fit-content;
-    padding: 4px 8px;
-    background: rgb(202, 38, 38);
-    color: inherit;
-    border-radius: 4px;
-    font-weight: 400;
-}
-
-.error-popup::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 90%;
-    border: 12px solid transparent;
-    transform: translate(-50%, 0px);
-    border-top-color: rgb(202, 38, 38);
-}
-
-p.error-popup-content {
-    margin: 0;
 }
 
 .auth-form-submit:active {
@@ -139,4 +112,9 @@ p.error-popup-content {
 .auth-form-submit:disabled:hover {
     outline: none;
     cursor: default;
+}
+
+.no-style {
+    margin: 0 !important;
+    padding: 0 !important;
 }

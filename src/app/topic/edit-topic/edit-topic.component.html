@@ -1,0 +1,2 @@
+<app-topic-form *ngIf="!!topicInput" title="Edit Topic" [topic]="topicInput" (closeCreateTopic)="closeCreateTopic.emit($event)"
+    (topicData)="editTopicHandler($event)"></app-topic-form>

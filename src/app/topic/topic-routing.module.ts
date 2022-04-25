@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthActivate } from '../core/guards/auth.activate';
+import { CreateTopicComponent } from './create-topic/create-topic.component';
 import { TopicDetailsComponent } from './topic-details/topic-details.component';
 import { TopicsComponent } from './topics/topics.component';
 

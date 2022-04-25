@@ -48,7 +48,7 @@
                     <div class="avatar-background" [@avatar]="userMenuIsOpen? 'active' : 'inactive'"></div>
                 </div>
             </li>
-            <app-user-menu [userMenuIsOpen]="userMenuIsOpen"></app-user-menu>
+            <app-user-menu class="user-menu" [userMenuIsOpen]="userMenuIsOpen"></app-user-menu>
         </ng-container>
         <ng-container *ngIf=" !isAuth">
             <li class="nav-list-item main-nav-link">

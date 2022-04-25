@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { IUser } from '../interfaces';
 import { environment as env } from '../../environments/environment'
-import { LocalStorage } from '../core/injection-tokens';
+import { LocalStorage } from '../injection-tokens';
 import { category } from '../shared/util';
 import { finalize, Observable, tap } from 'rxjs';
 

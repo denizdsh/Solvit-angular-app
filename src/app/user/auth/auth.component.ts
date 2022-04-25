@@ -12,7 +12,7 @@ export class AuthComponent {
   title: string;
   iconClassList: string;
 
-  constructor(private router: Router) {
+  constructor(router: Router) {
     this.isLogin = router.url.toString().includes('login');
     this.title = this.isLogin ? 'Login' : 'Register';
 

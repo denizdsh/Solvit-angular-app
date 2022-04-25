@@ -88,18 +88,33 @@
         <input ngModel #repassword="ngModel" class="auth-form-input" [type]="repasswordType" id="repassword"
             name="repassword" placeholder="Same as password" required [sameValue]="password" />
     </div>
-    <div class="avatar-icon">
-        <label class="auth-form-label auth-form-imageUrl-label" for="imageUrl" (click)="toggleShowImageInputHandler()">
-            Avatar icon
-            <fa-icon [icon]="icons.caretRight" *ngIf="!showImageInput"></fa-icon>
-            <fa-icon [icon]="icons.caretDown" *ngIf="showImageInput"></fa-icon>
-        </label>
-        <div [@openClose]="showImageInput? 'open' : 'closed'">
-            <input ngModel #imageUrl="ngModel" class="auth-form-input" type='url' id="imageUrl" name="imageUrl"
-                placeholder='www.image.com' />
-            <a class="link-to-imgur" href="https://imgur.com/upload" target="_blank" rel="noreferrer">
-                You can upload your image here...
-            </a>
+
+    <div class="no-style">
+        <!-- errors -->
+        <article [@avatarError]="showImageInput? 'open' : 'closed'"
+            [ngClass]="['error-popup', 'avatar-error', showImageInput? '' : 'closed']"
+            *ngIf="imageUrl.errors && imageUrl.touched">
+            <p class="error-popup-content">
+                <ng-container *ngIf="imageUrl.errors['matchPattern']">
+                    URL must start with HTTP
+                </ng-container>
+            </p>
+        </article>
+        <!--  -->
+        <div class="avatar-icon">
+            <label class="auth-form-label auth-form-imageUrl-label" for="imageUrl"
+                (click)="toggleShowImageInputHandler()">
+                Avatar icon
+                <fa-icon [icon]="icons.caretRight" *ngIf="!showImageInput"></fa-icon>
+                <fa-icon [icon]="icons.caretDown" *ngIf="showImageInput"></fa-icon>
+            </label>
+            <div [@openClose]="showImageInput? 'open' : 'closed'">
+                <input ngModel #imageUrl="ngModel" class="auth-form-input" type='url' id="imageUrl" name="imageUrl"
+                    placeholder='www.image.com' [matchPattern]="patterns.url" />
+                <a class="link-to-imgur" href="https://imgur.com/upload" target="_blank" rel="noreferrer">
+                    You can upload your image here...
+                </a>
+            </div>
         </div>
     </div>
     <div>

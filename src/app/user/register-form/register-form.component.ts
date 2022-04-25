@@ -22,6 +22,16 @@ import { UserService } from '../user.service';
       })),
       transition('closed => open', [animate('0.2s')]),
       transition('open => closed', [animate('0.2s')])
+    ]),
+    trigger('avatarError', [
+      state('closed', style({
+        bottom: '15px',
+        left: '100%',
+        transform: 'translate(-100%, 0)'
+      })),
+      state('open', style({})),
+      transition('closed => open', [animate('0.2s')]),
+      transition('open => closed', [animate('0.2s')])
     ])
   ]
 })
