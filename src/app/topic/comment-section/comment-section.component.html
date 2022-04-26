@@ -1,0 +1,22 @@
+<article *ngIf="!commentsHaveLoaded" style="position: relative">
+    <app-loader style="position: relative"></app-loader>
+</article>
+<section *ngIf="commentsHaveLoaded" class="comments">
+    <article class="comment-form-article">
+        <p class="comments-title">{{comments?.length || 'No' }} comments</p>
+        <form #form="ngForm" method="POST" class="comment-form" (ngSubmit)="commentHandler(form)"
+            (click)="redirectHandler()">
+            <textarea ngModel #content="ngModel" [disabled]="!isAuth" name="content" id="content" [class]="'comment-form-text' + (isAuth ? ''
+                : ' guest')" [placeholder]="isAuth ? 'Share your thoughts...'
+                : 'Log in or sign up to leave a comment'" (click)="redirectHandler()" (input)="redirectHandler()"
+                required></textarea>
+            <div class="comment-form-btn-wrapper">
+                <button type="submit" mat-stroked-button class="comment-form-btn"
+                    [disabled]="form.invalid || !isAuth">Comment</button>
+            </div>
+        </form>
+    </article>
+
+    <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+    <!-- : <Spinner modalType='comments-spinner spinner' />} -->
+</section>

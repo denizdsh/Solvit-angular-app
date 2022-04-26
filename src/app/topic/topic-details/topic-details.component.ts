@@ -23,7 +23,7 @@ export class TopicDetailsComponent implements OnInit {
   get user(): IUser | undefined { return this.userService.user };
   get followingCategories(): category[] { return this.userService.followingCategories };
   get savedTopics(): string[] { return this.userService.savedTopics };
-  get isOwner(): boolean { return this.topic._ownerId === this.user?._id };
+  get isOwner(): boolean { return this.topic?._ownerId === this.user?._id };
   get icons() { return icons };
   get saveIconClasses(): string { return 'fas fa-bookmark' + (this.topic._ownerId === this.user?._id ? ' owner' : '') }
 
@@ -92,9 +92,5 @@ export class TopicDetailsComponent implements OnInit {
       this.userService.saveTopic(this.topic._id);
       console.log('save');
     }
-  }
-
-  handler() {
-    console.log(this.topic)
   }
 }

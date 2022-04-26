@@ -223,7 +223,7 @@ a.topic-info-creation-posted-by-username:hover {
 
 @media all and (max-width: 700px) {
     .topic {
-        margin: 10px 0;
+        margin: 10px auto;
     }
 }
 

@@ -1,0 +1,18 @@
+<article class="comment">
+    <article class="comment-info">
+        <span class="comment-info-avatar">
+            <a [routerLink]="'/u/' + comment.author">
+                <app-avatar size="1.85rem" [image]="comment.authorImageUrl"></app-avatar>
+            </a>
+        </span>
+        <span class="comment-info-owner">
+            <a class="comment-info-owner-username" [routerLink]="'/u/' + comment.author">u/{{comment.author}}</a>
+        </span>
+        <span class="comment-info-date">{{formatDate(comment.createdAt)}}</span>
+    </article>
+    <article class="comment-content">
+        <p class="comment-content-text">
+            {{comment.content}}
+        </p>
+    </article>
+</article>

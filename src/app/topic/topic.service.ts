@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from '../../environments/environment'
 import { Observable } from 'rxjs';
-import { ITopic, ITopicData } from '../interfaces';
+import { IComment, ITopic, ITopicData } from '../interfaces';
 import { category, query } from '../shared/util';
 import { UserService } from '../user/user.service';
 
@@ -74,5 +74,13 @@ export class TopicService {
 
   dislikeTopic(topicId: string): Observable<string[]> {
     return this.http.post<string[]>(`${url}/${topicId}/dislike`, {}, this.authHeaderOptions);
+  }
+
+  getComments(topicId: string): Observable<IComment[]> {
+    return this.http.get<IComment[]>(`${url}/${topicId}/comments`);
+  }
+
+  postComment(topicId: string, content: string): Observable<IComment> {
+    return this.http.post<IComment>(`${url}/${topicId}/comments`, { content }, this.authHeaderOptions);
   }
 }

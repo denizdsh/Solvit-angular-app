@@ -1,0 +1,95 @@
+.comments {
+    margin-top: 15px;
+}
+
+.comments a {
+    text-decoration: none;
+}
+
+.comments::before {
+    content: "";
+    height: 3px;
+    position: absolute;
+    margin-top: 0px;
+    background: #313846;
+    border-radius: 5px;
+}
+
+.comments-title {
+    font-size: 0.75rem;
+    color: gray;
+    padding-top: 10px;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.comment-form-text {
+
+    min-height: 15vh;
+    background: #282C34;
+    color: #D7DADC;
+    font-size: 0.9rem;
+    border: 1px solid #313846;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.comment-form-text:focus {
+    outline: none;
+}
+
+.guest.comment-form-text {
+    min-height: 8vh;
+    max-height: 8vh;
+}
+
+.comment-form-btn {
+    font-size: 0.75rem;
+    margin: 7px auto 0 auto;
+    padding: 0.25rem 0.6rem;
+}
+
+.comment-form-btn:active {
+    background: rgba(59, 182, 249, 0.175);
+}
+
+@media all and (min-width: 1921px) {
+    .comment-form-text {
+        max-width: 56vw;
+        min-width: 56vw;
+    }
+
+    .comments::before {
+        width: 56vw;
+    }
+}
+
+@media all and (max-width: 1920px) {
+    .comment-form-text {
+        max-width: 76vw;
+        min-width: 76vw;
+    }
+
+    .comments::before {
+        width: 76vw;
+    }
+}
+
+@media all and (max-width: 600px) {
+    .comment-form-text {
+        max-width: 87vw;
+        min-width: 87vw;
+    }
+
+    .comments::before {
+        width: 87vw;
+    }
+
+    .comment-form-btn {
+        padding: 0 0.6rem;
+    }
+}

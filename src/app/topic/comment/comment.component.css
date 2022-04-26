@@ -1,0 +1,41 @@
+.comment {
+    padding: 10px;
+    margin-bottom: 30px;
+    border-left: 2px solid #313846;
+}
+
+.comment-info {
+    font-size: 0.75rem;
+    color: gray;
+    display: flex;
+    align-items: center;
+}
+
+.comment-info-avatar {
+    margin-right: 10px;
+}
+
+.comment-info-owner {
+    margin-right: 8px;
+}
+
+.comment-info-owner-username {
+    text-decoration: none;
+    color: gray;
+}
+
+.comment-info-date {
+    font-size: 0.65rem;
+}
+
+.comment-content {
+    line-height: 1.4;
+}
+
+.comment-content-text {
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding-left: calc(1.75rem + 13px);
+    margin-top: 0;
+    margin-bottom: 0;
+}

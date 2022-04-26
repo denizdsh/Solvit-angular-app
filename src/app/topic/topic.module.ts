@@ -18,6 +18,8 @@ import { SharedModule } from '../shared/shared.module';
 import { CreateTopicLinkComponent } from './create-topic-link/create-topic-link.component';
 import { TopicFormComponent } from './topic-form/topic-form.component';
 import { EditTopicComponent } from './edit-topic/edit-topic.component';
+import { CommentSectionComponent } from './comment-section/comment-section.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { EditTopicComponent } from './edit-topic/edit-topic.component';
     TopicHeadingComponent,
     CreateTopicLinkComponent,
     TopicFormComponent,
-    EditTopicComponent
+    EditTopicComponent,
+    CommentSectionComponent,
+    CommentComponent
   ],
   imports: [
     CommonModule,
