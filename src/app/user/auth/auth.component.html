@@ -1,11 +1,11 @@
 <section class="auth-section">
-    <fa-icon [icon]="icons.javascript" [class]="'auth-top-left-icon ' + iconClassList"></fa-icon>
-    <span [class]="'csharp-icon auth-top-right-icon ' + iconClassList">C#</span>
+    <fa-icon [icon]="icons.javascript" class="auth-top-left-icon auth-bg-icon"></fa-icon>
+    <span class="csharp-icon auth-top-right-icon auth-bg-icon">C#</span>
 
     <div *ngIf="type ==='edit-profile'" class="auth-title-holder">
         <div class="avatar-title-container">
             <app-avatar size="4rem" [image]="user!.imageUrl" [alt]="user!.username[0]"></app-avatar>
-            <h1 class="auth-title">{{title}}</h1>
+            <h1 class="auth-title">Edit Topic</h1>
         </div>
         <div class="line-under-title"></div>
     </div>
@@ -15,10 +15,10 @@
         <div class="line-under-title"></div>
     </div>
 
-    <app-login-form *ngIf="type === 'login'" style="width: 100%;"></app-login-form>
-    <app-register-form (imageUrlEmitter)="imageUrl = $event" *ngIf="type === 'register'" style="width: 100%;">
+    <app-login-form *ngIf="type === 'login'"></app-login-form>
+    <app-register-form (imageUrlEmitter)="imageUrl = $event" *ngIf="type === 'register'">
     </app-register-form>
-    <app-edit-profile (imageUrlEmitter)="imageUrl = $event" *ngIf="type === 'edit-profile'" style="width: 100%;">
+    <app-edit-profile (imageUrlEmitter)="imageUrl = $event" *ngIf="type === 'edit-profile'">
     </app-edit-profile>
 
     <section *ngIf="type !=='login'" class="avatar-viewer" [@toggleAvatarViewer]="imageUrl ? 'open' : 'closed'">
@@ -29,6 +29,6 @@
     </section>
 
 
-    <fa-icon [icon]="icons.python" [class]="'auth-bottom-left-icon ' + iconClassList"></fa-icon>
-    <fa-icon [icon]="icons.java" [class]="'auth-bottom-right-icon ' + iconClassList"></fa-icon>
+    <fa-icon [icon]="icons.python" class="auth-bottom-left-icon auth-bg-icon"></fa-icon>
+    <fa-icon [icon]="icons.java" class="auth-bottom-right-icon auth-bg-icon"></fa-icon>
 </section>

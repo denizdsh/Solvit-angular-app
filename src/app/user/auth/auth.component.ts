@@ -25,17 +25,12 @@ import { UserService } from '../user.service';
 })
 export class AuthComponent {
   title: string;
-  iconClassList: string;
   type: 'login' | 'register' | 'edit-profile';
   imageUrl: URL | undefined;
 
   constructor(activatedRoute: ActivatedRoute, private userService: UserService) {
     this.type = activatedRoute.snapshot.data['authFormType'];
-
     this.title = this.type[0].toLocaleUpperCase().concat(this.type.replace('-', ' ').slice(1));
-
-    this.iconClassList = 'auth-bg-icon';
-    if (this.type === 'register') this.iconClassList += ' auth-page-register';
   }
 
   get icons() { return icons };

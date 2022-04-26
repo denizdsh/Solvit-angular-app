@@ -13,6 +13,7 @@
 .avatar-title-container {
     display: flex;
     align-items: center;
+    padding-right: 2rem;
 }
 
 .avatar-title-container .auth-title {
@@ -104,9 +105,9 @@
 }
 
 .auth-top-right-icon {
-    top: 8vh;
+    top: 12.5vh;
     right: 3.5vw;
-    font-size: 13rem;
+    font-size: 13.5rem;
 }
 
 .auth-bottom-left-icon {
@@ -115,6 +116,6 @@
 }
 
 .auth-bottom-right-icon {
-    bottom: 4vh;
+    bottom: 4.5vh;
     right: 5vw;
 }

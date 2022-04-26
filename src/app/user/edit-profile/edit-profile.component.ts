@@ -42,12 +42,14 @@ export class EditProfileComponent {
   passwordType: 'password' | 'text' = 'password';
   showImageInput: boolean = false;
 
-  constructor(private router: Router, private service: UserService) { }
+  constructor(private router: Router, private service: UserService) {
+    if (this.service.user?.imageUrl) this.showImageInput = true;
+  }
 
   get icons() { return icons; };
   get patterns() { return patterns; };
   get user(): IUser | undefined { return this.service.user; };
-  
+
   togglePasswordVisibilityHandler(): void {
     this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
