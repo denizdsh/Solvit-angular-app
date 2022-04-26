@@ -1,95 +1,96 @@
-<!-- topic._id -->
-<!-- ? -->
 <app-edit-topic *ngIf="isOwner && trigger && !!topic" [topicInput]="topic" (closeCreateTopic)="trigger = $event">
 </app-edit-topic>
 
-<section class="topic">
-    <article class="topic-info ">
-        <article class="topic-info-creation-wrap">
-            <article class="topic-info-category">
-                <span class="category">
-                    <a [routerLink]="'/c/' + topic?.category">
-                        category/{{topic?.category}}
-                    </a>
-                </span>
-            </article>
-            <article class="topic-info-creation">
-                <span class="topic-info-creation-posted-by">
-                    by <a class="topic-info-creation-posted-by-username"
-                        [routerLink]="'/u/' + topic?.author">u/{{topic?.author}}</a>
-                </span>
-                <span class="topic-info-creation-date">{{ topic && formatDate(topic.createdAt)}}</span>
-            </article>
-        </article>
-        <article class="topic-info-follow-category">
-            <button *ngIf="topic && followingCategories.includes(topic.category)" mat-button
-                class="topic-info-follow-category-btn unfollow-category-btn"
-                (click)="unfollowHandler()">Following</button>
-            <button *ngIf="topic && !followingCategories.includes(topic.category)" mat-raised-button
-                class="topic-info-follow-category-btn" (click)="followHandler()">Follow</button>
-        </article>
+<section class="topic" [style]="!topicHasLoaded ? 'padding: 0; overflow: hidden;': ''">
+    <article *ngIf="!topicHasLoaded" style="width: 100%; height: 70vh; position: relative">
+        <app-loader style="position: relative;"></app-loader>
     </article>
-    <article class="topic-content">
-        <article class="topic-content-title">
-            <h2 class="topic-title">
-                {{topic?.title}}
-            </h2>
+    <ng-container *ngIf="topicHasLoaded">
+        <article class="topic-info ">
+            <article class="topic-info-creation-wrap">
+                <article class="topic-info-category">
+                    <span class="category">
+                        <a [routerLink]="'/c/' + topic?.category">
+                            category/{{topic?.category}}
+                        </a>
+                    </span>
+                </article>
+                <article class="topic-info-creation">
+                    <span class="topic-info-creation-posted-by">
+                        by <a class="topic-info-creation-posted-by-username"
+                            [routerLink]="'/u/' + topic?.author">u/{{topic?.author}}</a>
+                    </span>
+                    <span class="topic-info-creation-date">{{ topic && formatDate(topic.createdAt)}}</span>
+                </article>
+            </article>
+            <article class="topic-info-follow-category">
+                <button *ngIf="topic && followingCategories.includes(topic.category)" mat-button
+                    class="topic-info-follow-category-btn unfollow-category-btn"
+                    (click)="unfollowHandler()">Following</button>
+                <button *ngIf="topic && !followingCategories.includes(topic.category)" mat-raised-button
+                    class="topic-info-follow-category-btn" (click)="followHandler()">Follow</button>
+            </article>
         </article>
+        <article class="topic-content">
+            <article class="topic-content-title">
+                <h2 class="topic-title">
+                    {{topic?.title}}
+                </h2>
+            </article>
 
-        <article class="topic-content-description">
-            <p class="topic-content-description-text">{{topic?.description}}</p>
+            <article class="topic-content-description">
+                <p class="topic-content-description-text">{{topic?.description}}</p>
+            </article>
+
+            <article *ngIf="topic?.imageUrl" class="topic-content-img">
+                <img [src]="topic?.imageUrl" alt="image" class="topic-content-img-image" />
+            </article>
+
         </article>
-
-        <article *ngIf="topic?.imageUrl" class="topic-content-img">
-            <img [src]="topic?.imageUrl" alt="image" class="topic-content-img-image" />
-        </article>
-
-    </article>
-    <article class="topic-functionality">
-        <ul class="topic-functionality-list">
-            <li class="topic-functionality-list-item topic-functionality-list-item-likes" (click)="likeHandler()">
-                <fa-icon *ngIf="user && topic &&  topic.likes.includes(user._id)" [icon]="icons.like"
-                    class="fas fa-heart">
-                </fa-icon>
-                <fa-icon *ngIf="!user || topic &&!topic.likes.includes(user._id)" [icon]="icons.dislike"
-                    class="far fa-heart">
-                </fa-icon>
-                <span class="likes-count">{{topic?._likesCount}} Likes</span>
-            </li>
-            <li class="topic-functionality-list-item topic-functionality-list-item-follow"
-                [class]="isOwner ? 'owner' : ''" (click)="saveHandler()">
-                <span *ngIf="!isOwner" class="save-topic-text">
-                    {{topic && savedTopics.includes(topic._id) ? 'Unsave' : 'Save'}}
-                </span>
-                <fa-icon *ngIf="topic &&savedTopics.includes(topic._id)" [icon]="icons.save" [class]="saveIconClasses">
-                </fa-icon>
-                <fa-icon *ngIf="topic &&!savedTopics.includes(topic._id)" [icon]="icons.unsave"
-                    [class]="saveIconClasses">
-                </fa-icon>
-                <span *ngIf="isOwner" class="save-topic-text">
-                    {{topic &&savedTopics.includes(topic._id) ? 'Unsave' : 'Save'}}
-                </span>
-            </li>
-
-            <ng-container *ngIf="isOwner">
-                <li class="topic-functionality-list-item topic-functionality-list-item-edit">
-                    <button mat-button class='owner-functionality-button button-edit' (click)="trigger = true">
-                        Edit
-                        <fa-icon [icon]="icons.edit" class="fas fa-pencil-alt"></fa-icon>
-                    </button>
+        <article class="topic-functionality">
+            <ul class="topic-functionality-list">
+                <li class="topic-functionality-list-item topic-functionality-list-item-likes" (click)="likeHandler()">
+                    <fa-icon *ngIf="user && topic &&  topic.likes.includes(user._id)" [icon]="icons.like"
+                        class="fas fa-heart">
+                    </fa-icon>
+                    <fa-icon *ngIf="!user || topic &&!topic.likes.includes(user._id)" [icon]="icons.dislike"
+                        class="far fa-heart">
+                    </fa-icon>
+                    <span class="likes-count">{{topic?._likesCount}} Likes</span>
+                </li>
+                <li class="topic-functionality-list-item topic-functionality-list-item-follow"
+                    [class]="isOwner ? 'owner' : ''" (click)="saveHandler()">
+                    <span *ngIf="!isOwner" class="save-topic-text">
+                        {{topic && savedTopics.includes(topic._id) ? 'Unsave' : 'Save'}}
+                    </span>
+                    <fa-icon *ngIf="topic &&savedTopics.includes(topic._id)" [icon]="icons.save"
+                        [class]="saveIconClasses">
+                    </fa-icon>
+                    <fa-icon *ngIf="topic &&!savedTopics.includes(topic._id)" [icon]="icons.unsave"
+                        [class]="saveIconClasses">
+                    </fa-icon>
+                    <span *ngIf="isOwner" class="save-topic-text">
+                        {{topic &&savedTopics.includes(topic._id) ? 'Unsave' : 'Save'}}
+                    </span>
                 </li>
 
-                <li class="topic-functionality-list-item topic-functionality-list-item-delete ">
-                    <button mat-button routerLink='delete' class='owner-functionality-button button-delete'>
-                        Delete
-                        <fa-icon [icon]="icons.delete" class="fas fa-trash"></fa-icon>
-                    </button>
-                </li>
-            </ng-container>
-        </ul>
-    </article>
+                <ng-container *ngIf="isOwner">
+                    <li class="topic-functionality-list-item topic-functionality-list-item-edit">
+                        <button mat-button class='owner-functionality-button button-edit' (click)="trigger = true">
+                            Edit
+                            <fa-icon [icon]="icons.edit" class="fas fa-pencil-alt"></fa-icon>
+                        </button>
+                    </li>
+
+                    <li class="topic-functionality-list-item topic-functionality-list-item-delete ">
+                        <button mat-button routerLink='delete' class='owner-functionality-button button-delete'>
+                            Delete
+                            <fa-icon [icon]="icons.delete" class="fas fa-trash"></fa-icon>
+                        </button>
+                    </li>
+                </ng-container>
+            </ul>
+        </article>
+    </ng-container>
     <app-comment-section *ngIf="!!topic" [topicId]="topic._id"></app-comment-section>
-    <!-- <CommentSection [id]="topic._id" isAuthenticated={isAuthenticated} /> -->
 </section>
-<!-- : -->
-<!-- <Spinner modalType='spinner' /> -->

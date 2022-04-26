@@ -15,6 +15,7 @@ export class TopicDetailsComponent implements OnInit {
   topic!: ITopic;
   topicId: string | null;
   trigger: boolean = false;
+  topicHasLoaded: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private service: TopicService, private userService: UserService) {
     this.topicId = this.route.snapshot.paramMap.get('topicId');
@@ -40,7 +41,8 @@ export class TopicDetailsComponent implements OnInit {
         error: (err) => {
           this.router.navigate(['/']);
           console.error(err.message)
-        }
+        },
+        complete: () => this.topicHasLoaded = true
       }
     )
   }

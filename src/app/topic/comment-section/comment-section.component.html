@@ -1,5 +1,5 @@
-<article *ngIf="!commentsHaveLoaded" style="position: relative">
-    <app-loader style="position: relative"></app-loader>
+<article *ngIf="!commentsHaveLoaded" style="height: 20vh; position: relative; padding-top: 20px;">
+    <app-loader style="position: relative; border-radius: 10px;"></app-loader>
 </article>
 <section *ngIf="commentsHaveLoaded" class="comments">
     <article class="comment-form-article">
@@ -18,5 +18,4 @@
     </article>
 
     <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
-    <!-- : <Spinner modalType='comments-spinner spinner' />} -->
 </section>
