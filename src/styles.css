@@ -5,8 +5,7 @@
 
 html {
     font-size: 2vmin;
-    color: #D7DADC;
-    font-family: 'Roboto', sans-serif;
+    color: #d7dadcf1;
     font-weight: 500;
 }
 
@@ -72,7 +71,6 @@ main {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 /* notification */

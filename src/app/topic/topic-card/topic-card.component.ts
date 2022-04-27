@@ -19,7 +19,7 @@ export class TopicCardComponent {
   constructor(private router: Router, private _snackbar: MatSnackBar, private service: TopicService, private userService: UserService) { }
 
   get user(): IUser | undefined { return this.userService.user };
-  get followingCategories(): category[] { return this.userService.followingCategories };
+  get followingCategories(): category[] { return this.userService.followedCategories };
   get savedTopics(): string[] { return this.userService.savedTopics };
   get icons() { return icons };
   formatDate(date: string): string { return formatDate(date) };

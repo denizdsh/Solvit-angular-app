@@ -1,0 +1,25 @@
+<section class='aside'>
+    <p class="title">Sort by</p>
+    <article class="sort-options">
+        <article class="sort-by">
+            <span id="date" [class]="'sort-by-btn' + activeParam('date')" (click)="changeParamsHandler('date', order)">
+                <fa-icon [icon]="icons.clock" class="fas fa-clock"></fa-icon> Date
+            </span>
+            <span id="popularity" [class]="'sort-by-btn' + activeParam('popularity')"
+                (click)="changeParamsHandler('popularity', order)">
+                <fa-icon [icon]="icons.like" class="fas fa-heart"></fa-icon> Popularity
+            </span>
+        </article>
+
+
+        <article class="sort-order">
+            <span id="asc" [class]="'sort-order-btn' + activeParam('asc')" (click)="changeParamsHandler(sortBy, 'asc')">
+                <fa-icon [icon]="icons.sortAsc" class="fas fa-sort-amount-up"></fa-icon>
+            </span>
+            <span id="desc" [class]="'sort-order-btn' + activeParam('desc')"
+                (click)="changeParamsHandler(sortBy, 'desc')">
+                <fa-icon [icon]="icons.sortDesc" class="fas fa-sort-amount-down-alt"></fa-icon>
+            </span>
+        </article>
+    </article>
+</section>

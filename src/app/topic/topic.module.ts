@@ -20,6 +20,8 @@ import { TopicFormComponent } from './topic-form/topic-form.component';
 import { EditTopicComponent } from './edit-topic/edit-topic.component';
 import { CommentSectionComponent } from './comment-section/comment-section.component';
 import { CommentComponent } from './comment/comment.component';
+import { AsideComponent } from './aside/aside.component';
+import { SortAsideComponent } from './sort-aside/sort-aside.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { CommentComponent } from './comment/comment.component';
     TopicFormComponent,
     EditTopicComponent,
     CommentSectionComponent,
-    CommentComponent
+    CommentComponent,
+    AsideComponent,
+    SortAsideComponent
   ],
   imports: [
     CommonModule,

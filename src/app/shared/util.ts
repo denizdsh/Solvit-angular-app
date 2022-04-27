@@ -1,9 +1,9 @@
-import { faCaretDown, faCaretRight, faEye, faEyeSlash, faHeart, faComment, faBookmark, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCaretRight, faEye, faEyeSlash, faHeart, faComment, faBookmark, faPencilAlt, faTrash, faClock, faSortAmountUp, faSortAmountDownAlt } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark as emptyBookmark, faHeart as emptyHeart } from '@fortawesome/free-regular-svg-icons';
 import { faJava, faPython, faJsSquare } from '@fortawesome/free-brands-svg-icons';
 
 export type category = 'javascript' | 'java' | 'csharp' | 'python' | 'c++' | 'php' | 'devops' | 'qa' | 'front-end' | 'react' | 'jquery' | 'angular' | 'vue.js' | 'back-end' | 'node.js' | 'spring' | 'asp.net' | 'django' | 'other';
-export type query = { sortby: 'date' | 'popularity', order: 'asc' | 'desc' };
+export type query = { sortBy: 'date' | 'popularity', order: 'asc' | 'desc' };
 export type topicType = 'all' | 'followed' | 'category' | 'user' | 'saved';
 
 export const mainCategories: category[] = ['javascript', 'java', 'csharp', 'python', 'c++', 'php', 'devops', 'qa', 'front-end', 'back-end', 'other'];
@@ -33,7 +33,10 @@ export const icons = {
     save: faBookmark,
     unsave: emptyBookmark,
     edit: faPencilAlt,
-    delete: faTrash
+    delete: faTrash,
+    clock: faClock,
+    sortAsc: faSortAmountUp,
+    sortDesc: faSortAmountDownAlt
 }
 
 export const patterns = {

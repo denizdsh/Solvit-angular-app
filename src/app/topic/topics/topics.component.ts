@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ITopic } from 'src/app/interfaces';
+import { ActivatedRoute } from '@angular/router';
+import { ITopic, IUser } from 'src/app/interfaces';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { category, query, topicType } from 'src/app/shared/util';
+import { UserService } from 'src/app/user/user.service';
 import { TopicService } from '../topic.service';
 
 type urlTopicType = 'all' | '' | 'c' | 'u' | 'saved';
@@ -46,10 +47,19 @@ export class TopicsComponent implements OnInit {
         this.updateTopics()
       }
     })
+
+    this.activatedRoute.queryParams.subscribe({
+      next: () => this.updateTopics()
+    })
   }
 
   private updateTopics() {
-    this.service.getTopics[this.type](this.urlProp).subscribe({
+    let query = {
+      sortBy: this.activatedRoute.snapshot.queryParams['sortBy'],
+      order: this.activatedRoute.snapshot.queryParams['order']
+    };
+
+    this.service.getTopics[this.type](this.urlProp || query, query).subscribe({
       next: (data) => {
         this.topics = data
       },

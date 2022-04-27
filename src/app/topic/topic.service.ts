@@ -8,8 +8,8 @@ import { UserService } from '../user/user.service';
 
 const url = env['API_URL'] + '/topics';
 
-const urlQuery = (query: query) => { return `?sortBy=${query.sortby}&order=${query.order}` }
-const defaultQuery: query = { sortby: 'date', order: 'asc' };
+const urlQuery = (query: query) => { return `?sortBy=${query.sortBy}&order=${query.order}` }
+const defaultQuery: query = { sortBy: 'date', order: 'asc' };
 
 
 @Injectable({

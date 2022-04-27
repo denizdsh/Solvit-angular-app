@@ -1,0 +1,38 @@
+aside {
+    position: absolute;
+    top: 10px;
+    left: 105%;
+    width: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+@media all and (max-width: 2100px) {
+    aside {
+        width: 15vw;
+    }
+}
+
+@media all and (max-width: 1400px) {
+    aside {
+        width: 20vw;
+    }
+}
+
+@media all and (max-width: 1000px) {
+    aside {
+        width: 16vw;
+        padding: 10px 10px;
+    }
+}
+
+@media all and (max-width: 700px) {
+    aside {
+        width: 80%;
+        top: 10px;
+        padding: 10px 20px;
+
+    }
+}
