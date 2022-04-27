@@ -17,7 +17,7 @@ const userActionUrl = `${env.API_URL}/user-action`;
 export class UserService {
   user: IUser | undefined;
   accessToken: string | null = this.localStorage.getItem('accessToken') || null;
-  followingCategories: category[] = [];
+  followedCategories: category[] = [];
   savedTopics: string[] = [];
   isAuthProcessFinished: boolean = false;
 
@@ -44,7 +44,7 @@ export class UserService {
 
     if (isNewUser) return;
 
-    this.getFollowingCategories();
+    this.getFollowedCategories();
     this.getSavedTopics();
   }
 
@@ -104,7 +104,7 @@ export class UserService {
     this.localStorage.removeItem('accessToken');
     this.accessToken = null;
     this.user = undefined;
-    this.followingCategories = [];
+    this.followedCategories = [];
     this.savedTopics = [];
   }
 
@@ -118,9 +118,9 @@ export class UserService {
       );
   }
 
-  getFollowingCategories(): void {
+  getFollowedCategories(): void {
     this.http.get<category[]>(`${thisUserUrl}/following-categories`, this.authHeaderOptions).subscribe({
-      next: (categories) => this.followingCategories = categories,
+      next: (categories) => this.followedCategories = categories,
       error: (err) => console.error(err)
     })
   }
@@ -134,7 +134,7 @@ export class UserService {
 
   followCategory(category: category): void {
     this.http.post<category[]>(`${userActionUrl}/follow/${category}`, {}, this.authHeaderOptions).subscribe({
-      next: (categories) => this.followingCategories = categories,
+      next: (categories) => this.followedCategories = categories,
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',
@@ -152,7 +152,7 @@ export class UserService {
 
   unfollowCategory(category: category): void {
     this.http.post<category[]>(`${userActionUrl}/unfollow/${category}`, {}, this.authHeaderOptions).subscribe({
-      next: (categories) => this.followingCategories = categories,
+      next: (categories) => this.followedCategories = categories,
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',

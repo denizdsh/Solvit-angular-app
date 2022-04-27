@@ -85,7 +85,7 @@ export class RegisterFormComponent {
       imageUrl: imageUrl.trim()
     }).subscribe({
       next: () => {
-        this.router.parseUrl(this.activatedRoute.snapshot.queryParams['redirect'] || '/')
+        this.router.navigate([this.activatedRoute.snapshot.queryParams['redirect'] || '/'])
 
         this._snackbar.openFromComponent(NotificationComponent, {
           data: {
