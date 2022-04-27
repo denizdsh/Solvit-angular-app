@@ -5,6 +5,8 @@ import { environment as env } from '../../environments/environment'
 import { LocalStorage } from '../injection-tokens';
 import { category } from '../shared/util';
 import { finalize, Observable, tap } from 'rxjs';
+import { NotificationComponent } from '../shared/notification/notification.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const thisUserUrl = `${env.API_URL}/u/me`;
 const userActionUrl = `${env.API_URL}/user-action`;
@@ -20,8 +22,11 @@ export class UserService {
   isAuthProcessFinished: boolean = false;
 
 
-  constructor(@Inject(LocalStorage) private localStorage: Window['localStorage'],
-    private http: HttpClient) {
+  constructor(
+    @Inject(LocalStorage) private localStorage: Window['localStorage'],
+    private http: HttpClient,
+    private _snackbar: MatSnackBar
+  ) {
     this.accessToken = this.localStorage.getItem('accessToken');
   }
 
@@ -33,11 +38,9 @@ export class UserService {
   }
 
   private handleUserAuth(user: IUser, isNewUser = false) {
-    console.log('loggedin')
     this.localStorage.setItem('accessToken', user.accessToken);
     this.accessToken = user.accessToken;
     this.user = user;
-
 
     if (isNewUser) return;
 
@@ -53,10 +56,25 @@ export class UserService {
         },
         error: (err) => {
           this.logout();
-          console.error(err);
+
+          this._snackbar.openFromComponent(NotificationComponent, {
+            data: {
+              type: 'error',
+              message: err.error.message || 'Session expired. Please log in.'
+            }
+          })
         },
-        complete: () => { this.isAuthProcessFinished = true; }
-      });
+        complete: () => {
+          this.isAuthProcessFinished = true;
+
+          this._snackbar.openFromComponent(NotificationComponent, {
+            data: {
+              type: 'success',
+              message: `Welcome, ${this.user!.username}`
+            }
+          })
+        }
+      })
     } else {
       this.isAuthProcessFinished = true;
     }
@@ -67,7 +85,7 @@ export class UserService {
 
     return this.http.post<IUser>(`${env.API_URL}/login`, body)
       .pipe(
-        tap(user => { console.log(user); this.handleUserAuth(user) }),
+        tap(user => this.handleUserAuth(user)),
         finalize(() => this.isAuthProcessFinished = true)
       );
   }
@@ -100,7 +118,6 @@ export class UserService {
       );
   }
 
-
   getFollowingCategories(): void {
     this.http.get<category[]>(`${thisUserUrl}/following-categories`, this.authHeaderOptions).subscribe({
       next: (categories) => this.followingCategories = categories,
@@ -118,28 +135,72 @@ export class UserService {
   followCategory(category: category): void {
     this.http.post<category[]>(`${userActionUrl}/follow/${category}`, {}, this.authHeaderOptions).subscribe({
       next: (categories) => this.followingCategories = categories,
-      error: (err) => console.error(err)
+      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'error',
+          message: err.error.message || `Couldn't follow category/${category}`
+        }
+      }),
+      complete: () => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'info',
+          message: `Followed category/${category}`
+        }
+      })
     })
   }
 
   unfollowCategory(category: category): void {
     this.http.post<category[]>(`${userActionUrl}/unfollow/${category}`, {}, this.authHeaderOptions).subscribe({
       next: (categories) => this.followingCategories = categories,
-      error: (err) => console.error(err)
+      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'error',
+          message: err.error.message || `Couldn't unfollow category/${category}.`
+        }
+      }),
+      complete: () => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'info',
+          message: `Unfollowed category/${category}.`
+        }
+      })
     })
   }
 
   saveTopic(topicId: string): void {
     this.http.post<string[]>(`${userActionUrl}/save/${topicId}`, {}, this.authHeaderOptions).subscribe({
       next: (topics) => this.savedTopics = topics,
-      error: (err) => console.error(err)
+      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'error',
+          message: err.error.message || 'Couldn\'t save topic.'
+        }
+      }),
+      complete: () => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'info',
+          message: 'Saved topic.'
+        }
+      })
     })
   }
 
   unsaveTopic(topicId: string): void {
     this.http.post<string[]>(`${userActionUrl}/unsave/${topicId}`, {}, this.authHeaderOptions).subscribe({
       next: (topics) => this.savedTopics = topics,
-      error: (err) => console.error(err)
+      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'error',
+          message: err.error.message || 'Couldn\'t unsave topic.'
+        }
+      }),
+      complete: () => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'info',
+          message: 'Unsaved topic.'
+        }
+      })
     })
   }
 

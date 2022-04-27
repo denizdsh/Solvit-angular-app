@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITopic } from 'src/app/interfaces';
+import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { category, query, topicType } from 'src/app/shared/util';
 import { TopicService } from '../topic.service';
 
@@ -29,6 +31,7 @@ export class TopicsComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private _snackbar: MatSnackBar,
     private service: TopicService
   ) { }
 
@@ -44,13 +47,20 @@ export class TopicsComponent implements OnInit {
       }
     })
   }
-  
+
   private updateTopics() {
     this.service.getTopics[this.type](this.urlProp).subscribe({
       next: (data) => {
         this.topics = data
       },
-      error: (e) => { window.alert(e) },
+      error: (err) => {
+        console.log(err); this._snackbar.openFromComponent(NotificationComponent, {
+          data: {
+            type: 'error',
+            message: err.error.message || 'Couldn\'t load topics.'
+          }
+        })
+      },
       complete: () => this.isLoading = false
     })
   }

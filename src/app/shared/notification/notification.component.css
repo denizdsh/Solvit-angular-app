@@ -1,0 +1,53 @@
+.notification {
+    min-width: 344px;
+    padding: 12px 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #D7DADC;
+    font-weight: 400;
+}
+
+.message {
+    margin: 0 25px;
+    font-size: 0.9rem;
+}
+
+svg {
+    fill: currentColor;
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+button {
+    font-size: 1rem;
+}
+
+div {
+    display: flex;
+    align-items: center;
+
+}
+
+.success {
+    background: #4E9A51;
+}
+
+.error {
+    background: #D84646;
+}
+
+.warning {
+    color: #ffe8c5;
+    background: #F68A1C;
+}
+
+.warning svg {
+    fill: rgb(148 6 148 / 80%);
+    ;
+}
+
+.info {
+    background: #1E95D6;
+}

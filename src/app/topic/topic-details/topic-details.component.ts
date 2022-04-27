@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { ITopic, IUser } from 'src/app/interfaces';
+import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { icons, formatDate, category } from 'src/app/shared/util';
 import { UserService } from 'src/app/user/user.service';
 import { TopicService } from '../topic.service';
@@ -17,7 +19,13 @@ export class TopicDetailsComponent implements OnInit {
   trigger: boolean = false;
   topicHasLoaded: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private service: TopicService, private userService: UserService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private _snackbar: MatSnackBar,
+    private service: TopicService,
+    private userService: UserService
+  ) {
     this.topicId = this.route.snapshot.paramMap.get('topicId');
   }
 
@@ -40,7 +48,12 @@ export class TopicDetailsComponent implements OnInit {
         },
         error: (err) => {
           this.router.navigate(['/']);
-          console.error(err.message)
+          this._snackbar.openFromComponent(NotificationComponent, {
+            data: {
+              type: 'error',
+              message: 'Couldn\'t load topic.'
+            }
+          })
         },
         complete: () => this.topicHasLoaded = true
       }
@@ -48,25 +61,32 @@ export class TopicDetailsComponent implements OnInit {
   }
 
   private unauthorizatedCall(): void {
-    this.router.navigate(['/user/login']);
+    this.router.navigate(['/user/login'], { queryParams: { redirect: this.router.routerState.snapshot.url } });
   }
 
   followHandler(): void {
-    if (!this.user) this.unauthorizatedCall();
+    if (!this.user) {
+      this.unauthorizatedCall();
+      return;
+    }
 
     this.userService.followCategory(this.topic.category);
-    console.log('follow');
   }
 
   unfollowHandler(): void {
-    if (!this.user) this.unauthorizatedCall();
+    if (!this.user) {
+      this.unauthorizatedCall();
+      return;
+    }
 
     this.userService.unfollowCategory(this.topic.category);
-    console.log('unfollow');
   }
 
   likeHandler(): void {
-    if (!this.user) this.unauthorizatedCall();
+    if (!this.user) {
+      this.unauthorizatedCall();
+      return;
+    }
 
     let obs: Observable<string[]>;
     if (this.topic.likes.includes(this.user!._id)) {
@@ -80,19 +100,25 @@ export class TopicDetailsComponent implements OnInit {
         this.topic.likes = likes
         this.topic._likesCount = likes.length
       },
-      error: (err) => console.error(err)
+      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'error',
+          message: err.error.message || 'Couldn\'t perform action.'
+        }
+      })
     })
   }
 
   saveHandler(): void {
-    if (!this.user) this.unauthorizatedCall();
+    if (!this.user) {
+      this.unauthorizatedCall();
+      return;
+    }
 
     if (this.savedTopics.includes(this.topic._id)) {
       this.userService.unsaveTopic(this.topic._id);
-      console.log('unsave');
     } else {
       this.userService.saveTopic(this.topic._id);
-      console.log('save');
     }
   }
 }

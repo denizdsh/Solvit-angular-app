@@ -8,8 +8,6 @@ import { UserService } from '../user/user.service';
 
 const url = env['API_URL'] + '/topics';
 
-type topicType = 'all' | 'followed' | 'category' | 'user' | 'saved';
-
 const urlQuery = (query: query) => { return `?sortBy=${query.sortby}&order=${query.order}` }
 const defaultQuery: query = { sortby: 'date', order: 'asc' };
 
@@ -44,7 +42,6 @@ export class TopicService {
   }
 
   getTopicsByCategory(category: category, query = defaultQuery): Observable<ITopic[]> {
-    console.log('category', category);
     return this.http.get<ITopic[]>(`${url}/c/${category}${urlQuery(query)}`);
   }
 

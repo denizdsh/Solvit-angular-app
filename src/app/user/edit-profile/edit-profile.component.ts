@@ -1,10 +1,12 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { IUser } from 'src/app/interfaces';
-import { icons, patterns } from 'src/app/shared/util';
 import { UserService } from '../user.service';
+import { IUser } from 'src/app/interfaces';
+import { NotificationComponent } from 'src/app/shared/notification/notification.component';
+import { icons, patterns } from 'src/app/shared/util';
 
 @Component({
   selector: 'app-edit-profile',
@@ -42,7 +44,11 @@ export class EditProfileComponent {
   passwordType: 'password' | 'text' = 'password';
   showImageInput: boolean = false;
 
-  constructor(private router: Router, private service: UserService) {
+  constructor(
+    private router: Router,
+    private _snackbar: MatSnackBar,
+    private service: UserService
+  ) {
     if (this.service.user?.imageUrl) this.showImageInput = true;
   }
 
@@ -67,8 +73,22 @@ export class EditProfileComponent {
     const { username, imageUrl, password } = form.value;
 
     this.service.editProfile({ username: username.trim(), imageUrl: imageUrl.trim(), password: password.trim() }).subscribe({
-      next: () => this.router.navigate(['/']),
-      error: (err) => console.log(err)
+      next: () => {
+        this.router.navigate(['/'])
+
+        this._snackbar.openFromComponent(NotificationComponent, {
+          data: {
+            type: 'success',
+            message: 'Successfully edited profile!'
+          }
+        })
+      },
+      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'error',
+          message: err.error.message || 'Couldn\'t edit profile.'
+        }
+      })
     })
   }
 }

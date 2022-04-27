@@ -1,7 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { icons, patterns } from 'src/app/shared/util';
 import { UserService } from '../user.service';
 
@@ -45,6 +47,7 @@ export class RegisterFormComponent {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private _snackbar: MatSnackBar,
     private service: UserService
   ) { }
 
@@ -81,8 +84,22 @@ export class RegisterFormComponent {
       repassword: repassword.trim(),
       imageUrl: imageUrl.trim()
     }).subscribe({
-      next: () => this.router.parseUrl(this.activatedRoute.snapshot.queryParams['redirect'] || '/'),
-      error: (err) => window.alert(err[0])
+      next: () => {
+        this.router.parseUrl(this.activatedRoute.snapshot.queryParams['redirect'] || '/')
+
+        this._snackbar.openFromComponent(NotificationComponent, {
+          data: {
+            type: 'success',
+            message: 'Welcome to Solvit!'
+          }
+        })
+      },
+      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'error',
+          message: err.messagge || 'Coulndn\'t register.'
+        }
+      })
     });
   }
 }
