@@ -17,6 +17,7 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
 }
 
 code {
@@ -153,4 +154,12 @@ div.mat-form-field-wrapper {
 
 .mat-optgroup-label {
     height: 2.6rem !important;
+}
+
+/* mat buttons */
+@media all and (max-width: 500px) {
+    .mat-button, .mat-raised-button {
+        line-height: 2rem !important;
+        padding-inline: 0 !important;
+    }
 }

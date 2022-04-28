@@ -22,6 +22,8 @@ import { CommentSectionComponent } from './comment-section/comment-section.compo
 import { CommentComponent } from './comment/comment.component';
 import { AsideComponent } from './aside/aside.component';
 import { SortAsideComponent } from './sort-aside/sort-aside.component';
+import { CategoriesMenuComponent } from './categories-menu/categories-menu.component';
+import { CategoriesMenuButtonComponent } from './categories-menu-button/categories-menu-button.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { SortAsideComponent } from './sort-aside/sort-aside.component';
     CommentSectionComponent,
     CommentComponent,
     AsideComponent,
-    SortAsideComponent
+    SortAsideComponent,
+    CategoriesMenuComponent,
+    CategoriesMenuButtonComponent
   ],
   imports: [
     CommonModule,

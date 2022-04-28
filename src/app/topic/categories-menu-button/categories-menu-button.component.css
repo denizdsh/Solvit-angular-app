@@ -1,0 +1,55 @@
+.aside-categories {
+    width: 90%;
+    margin: 5px auto 15px auto;
+}
+
+.aside-categories-btn {
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.88rem;
+    padding: 9px 16px;
+    color: #86D6F9;
+    background: #262a37;
+    border: 2px solid #313846;
+    border-radius: 20px;
+}
+
+.aside-categories-btn:active {
+    color: lightblue;
+    background: #313846;
+}
+
+.close-btn {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 10vw;
+}
+
+@media all and (max-width: 2100px) {
+    .close-btn {
+        width: 15vw;
+    }
+}
+
+@media all and (max-width: 1400px) {
+    .close-btn {
+        width: 20vw;
+    }
+}
+
+@media all and (max-width: 1000px) {
+    .close-btn {
+        width: 16vw;
+        padding: 10px 10px;
+    }
+}
+
+@media all and (max-width: 800px) {
+    .close-btn {
+        width: 80%;
+        padding: 10px 20px;
+        margin-top: 25px;
+        margin-bottom: 0;
+    }
+}

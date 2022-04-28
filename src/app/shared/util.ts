@@ -56,7 +56,7 @@ export function formatCategory(category: category | string): string {
         case 'devops':
             return 'DevOps';
         case 'qa':
-            return 'QA';
+            return 'Quality Assurance';
         case 'jquery':
             return 'jQuery';
         case 'asp.net':
@@ -64,8 +64,8 @@ export function formatCategory(category: category | string): string {
     }
 
     return category[0].toLocaleUpperCase().concat(category.slice(1));
-
 }
+
 export function formatDate(rawDate: string): string {
     const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
     let [date, time] = rawDate.split('T');

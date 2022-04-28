@@ -1,0 +1,5 @@
+<section [class]="'aside-categories ' + (isCloseBtn && 'close-btn')">
+    <button class="aside-categories-btn" (click)="showCategoriesMenu.emit(true)">
+        <ng-content></ng-content>
+    </button>
+</section>

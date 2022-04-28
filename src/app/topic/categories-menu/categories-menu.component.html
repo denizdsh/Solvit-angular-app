@@ -1,0 +1,25 @@
+<app-categories-menu-button (showCategoriesMenu)="emitHandler($event)" [isCloseBtn]="true">
+    Close menu
+</app-categories-menu-button>
+<section class="categories" [@openClosed]="shouldMenuClose? 'closed' : 'open'">
+    <article class="category-card" *ngFor="let category of categories">
+        <article class="category-card-img" [style]="category.imgStyles">
+            <img [src]="category.img" [alt]="category.value" />
+        </article>
+        <article class="category-card-logo">
+            <app-avatar size="3.5rem" [image]="category.img" [alt]="category.value[0]"
+                [customStyle]="'box-shadow: rgb(134 214 249) 0px 0px 7px -3px; border: 4px solid rgb(49, 56, 70); background: ' +  category.imgStyles.background + ';'">
+            </app-avatar>
+        </article>
+        <article class="category-card-title">
+            <p>{{formatCategory(category.value)}}</p>
+        </article>
+        <article class="category-card-follow">
+            <button *ngIf="followedCategories.includes(category.value)" mat-button
+                class="topic-info-follow-category-btn unfollow-category-btn"
+                (click)="unfollowHandler(category.value)">Following</button>
+            <button *ngIf="!followedCategories.includes(category.value)" mat-raised-button
+                class="topic-info-follow-category-btn" (click)="followHandler(category.value)">Follow</button>
+        </article>
+    </article>
+</section>

@@ -1,3 +1,7 @@
 <aside>
+    <app-categories-menu-button *ngIf="type==='followed'" (showCategoriesMenu)="showCategoriesMenu.emit(!isCloseBtn)">
+        {{isCloseBtn ? 'Close menu' : 'Categories'}}
+    </app-categories-menu-button>
+
     <app-sort-aside *ngIf="showSortAside"></app-sort-aside>
 </aside>

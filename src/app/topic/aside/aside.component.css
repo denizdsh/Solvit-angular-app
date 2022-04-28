@@ -28,11 +28,13 @@ aside {
     }
 }
 
-@media all and (max-width: 700px) {
+@media all and (max-width: 800px) {
     aside {
-        width: 80%;
-        top: 10px;
+        position: relative;
+        width: 100%;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%);
         padding: 10px 20px;
-
     }
 }

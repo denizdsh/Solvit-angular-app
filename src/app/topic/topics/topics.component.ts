@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { ITopic, IUser } from 'src/app/interfaces';
+import { interval, take } from 'rxjs';
+import { ITopic } from 'src/app/interfaces';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { category, query, topicType } from 'src/app/shared/util';
-import { UserService } from 'src/app/user/user.service';
 import { TopicService } from '../topic.service';
 
 type urlTopicType = 'all' | '' | 'c' | 'u' | 'saved';
@@ -29,6 +29,9 @@ export class TopicsComponent implements OnInit {
   topics: ITopic[] | undefined;
   isLoading: boolean = true;
   trigger: boolean = false;
+
+  showCategoriesMenu: boolean = false;
+  shouldMenuClose!: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -73,5 +76,29 @@ export class TopicsComponent implements OnInit {
       },
       complete: () => this.isLoading = false
     })
+  }
+
+  closeCategoriesMenu(runAnimation: boolean = true): void {
+    this.shouldMenuClose = true;
+
+    let time = runAnimation ? 100 : 0;
+    interval(time).pipe(take(1)).subscribe(() => {
+      this.showCategoriesMenu = false;
+      this._snackbar.dismiss();
+      this.updateTopics();
+    })
+  }
+
+  categoriesMenuHandler(value: boolean) {
+    if (!value) return this.closeCategoriesMenu(false);
+
+    this._snackbar.openFromComponent(NotificationComponent, {
+      duration: undefined,
+      data: {
+        type: 'info',
+        message: 'Close categories menu to load the new topics'
+      }
+    })
+    this.showCategoriesMenu = true;
   }
 }
