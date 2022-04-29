@@ -1,5 +1,5 @@
 <section class="create-topic-link">
-    <app-avatar size="3rem" [image]="user?.imageUrl" [alt]="user? user.username[0] : '?'">
+    <app-avatar size="3rem" [image]="user?.imageUrl" [alt]="user?.username?.[0]">
     </app-avatar>
     <input type="text" class="create-topic-link-input"
         [placeholder]="user? 'What\'s on your mind?' : 'Log in to create a post'" (click)="redirectHandler()"

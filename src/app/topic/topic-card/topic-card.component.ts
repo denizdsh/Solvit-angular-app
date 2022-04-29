@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ITopic, IUser } from 'src/app/interfaces';
+import { ImageService } from 'src/app/shared/image.service';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { icons, formatDate, category } from 'src/app/shared/util';
 import { UserService } from 'src/app/user/user.service';
@@ -16,7 +17,12 @@ import { TopicService } from '../topic.service';
 export class TopicCardComponent {
   @Input() topic!: ITopic;
 
-  constructor(private router: Router, private _snackbar: MatSnackBar, private service: TopicService, private userService: UserService) { }
+  constructor(
+    private router: Router,
+    private _snackbar: MatSnackBar,
+    private service: TopicService,
+    private userService: UserService
+  ) { }
 
   get user(): IUser | undefined { return this.userService.user };
   get followingCategories(): category[] { return this.userService.followedCategories };

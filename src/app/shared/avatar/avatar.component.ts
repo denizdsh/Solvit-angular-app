@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ImageService } from '../image.service';
 
 @Component({
   selector: 'app-avatar',
@@ -7,12 +8,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AvatarComponent implements OnInit {
   @Input() image: URL | undefined;
-  @Input() alt: string = '?'
+  @Input() alt: string | undefined;
   @Input() size: string = '2rem';
   @Input() customStyle: string | undefined;
   style!: string;
 
   imageHasLoaded = false;
+
+  constructor() { }
 
   ngOnInit(): void {
     const match: RegExpMatchArray = this.size.match(/[0-9\.]+/)!;

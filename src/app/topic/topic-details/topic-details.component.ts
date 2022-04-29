@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { ITopic, IUser } from 'src/app/interfaces';
+import { ImageService } from 'src/app/shared/image.service';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { icons, formatDate, category } from 'src/app/shared/util';
 import { UserService } from 'src/app/user/user.service';
@@ -24,7 +25,7 @@ export class TopicDetailsComponent implements OnInit {
     private router: Router,
     private _snackbar: MatSnackBar,
     private service: TopicService,
-    private userService: UserService
+    private userService: UserService,
   ) {
     this.topicId = this.route.snapshot.paramMap.get('topicId');
   }

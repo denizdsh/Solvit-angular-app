@@ -2,7 +2,7 @@
     <article class="comment-info">
         <span class="comment-info-avatar">
             <a [routerLink]="'/u/' + comment.author">
-                <app-avatar size="1.85rem" [image]="comment.authorImageUrl"></app-avatar>
+                <app-avatar size="1.85rem" [image]="comment.authorImageUrl" [alt]="comment.author[0]"></app-avatar>
             </a>
         </span>
         <span class="comment-info-owner">

@@ -22,10 +22,10 @@
     </app-edit-profile>
 
     <section *ngIf="type !=='login'" class="avatar-viewer" [@toggleAvatarViewer]="imageUrl ? 'open' : 'closed'">
-        <app-avatar size="9rem" class="first-avatar" [image]="imageUrl" [alt]="user? user.username[0] : '?'">
+        <app-avatar size="9rem" class="first-avatar" [image]="imageUrl" [alt]="user?.username?.[0]">
         </app-avatar>
-        <app-avatar size="6rem" [image]="imageUrl" [alt]="user? user.username[0] : '?'"></app-avatar>
-        <app-avatar size="3rem" [image]="imageUrl" [alt]="user? user.username[0] : '?'"></app-avatar>
+        <app-avatar size="6rem" [image]="imageUrl" [alt]="user?.username?.[0]"></app-avatar>
+        <app-avatar size="3rem" [image]="imageUrl" [alt]="user?.username?.[0]"></app-avatar>
     </section>
 
 
