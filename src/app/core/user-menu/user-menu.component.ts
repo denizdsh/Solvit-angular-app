@@ -12,9 +12,8 @@ import { UserService } from 'src/app/user/user.service';
     trigger('userMenu', [
       state('open', style({
         top: '120px',
-        right: '100px',
         opacity: '100%',
-        fontSize: '1rem',        
+        fontSize: '1rem',
       })),
       state('closed', style({
         top: '0px',

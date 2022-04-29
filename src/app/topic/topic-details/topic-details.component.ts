@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { ITopic, IUser } from 'src/app/interfaces';
+import { IDialogData } from 'src/app/interfaces/dialogData';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { ImageService } from 'src/app/shared/image.service';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { icons, formatDate, category } from 'src/app/shared/util';
@@ -24,6 +27,7 @@ export class TopicDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private _snackbar: MatSnackBar,
+    public dialog: MatDialog,
     private service: TopicService,
     private userService: UserService,
   ) {
@@ -121,5 +125,45 @@ export class TopicDetailsComponent implements OnInit {
     } else {
       this.userService.saveTopic(this.topic._id);
     }
+  }
+
+  dialogConfirm(callback: Function, data: IDialogData): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe(result => {
+        if (!!result)
+          callback();
+      })
+  }
+
+  deleteHandler(): void {
+    this.dialogConfirm(() =>
+      this.service.deleteTopic(this.topic._id).subscribe({
+        next: () => {
+          this._snackbar.openFromComponent(NotificationComponent, {
+            data: {
+              type: 'success',
+              message: 'Successfully deleted topic.'
+            }
+          })
+
+          this.router.navigate(['/']);
+        },
+        error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+          data: {
+            type: 'error',
+            message: err.error.message || 'Couldn\t delete topic.'
+          }
+        })
+      }), {
+      title: 'Deletion confirmation',
+      content: 'Are you sure you want to delete this topic?',
+      cancel: 'Nevermind',
+      continue: 'DELETE'
+    })
   }
 }

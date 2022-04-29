@@ -65,6 +65,10 @@ export class TopicService {
     return this.http.put<ITopic>(`${url}/${topicId}`, body, this.authHeaderOptions)
   }
 
+  deleteTopic(topicId: string): Observable<ITopic> {
+    return this.http.delete<ITopic>(`${url}/${topicId}`, this.authHeaderOptions)
+  }
+
   likeTopic(topicId: string): Observable<string[]> {
     return this.http.post<string[]>(`${url}/${topicId}/like`, {}, this.authHeaderOptions);
   }

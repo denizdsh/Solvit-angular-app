@@ -83,7 +83,7 @@
                     </li>
 
                     <li class="topic-functionality-list-item topic-functionality-list-item-delete ">
-                        <button mat-button routerLink='delete' class='owner-functionality-button button-delete'>
+                        <button mat-button (click)="deleteHandler()" class='owner-functionality-button button-delete'>
                             Delete
                             <fa-icon [icon]="icons.delete" class="fas fa-trash"></fa-icon>
                         </button>

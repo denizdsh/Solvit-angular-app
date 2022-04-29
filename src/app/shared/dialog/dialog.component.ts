@@ -1,12 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-interface IDialogData {
-  title?: string,
-  content: string,
-  cancel?: string,
-  continue?: string
-}
+import { IDialogData } from 'src/app/interfaces/dialogData';
 
 @Component({
   selector: 'app-dialog',
