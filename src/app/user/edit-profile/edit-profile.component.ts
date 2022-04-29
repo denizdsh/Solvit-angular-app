@@ -8,6 +8,9 @@ import { IUser } from 'src/app/interfaces';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { icons, patterns } from 'src/app/shared/util';
 import { ImageService } from 'src/app/shared/image.service';
+import { IDialogData } from 'src/app/interfaces/dialogData';
+import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-profile',
@@ -49,6 +52,7 @@ export class EditProfileComponent {
     private router: Router,
     private _snackbar: MatSnackBar,
     private service: UserService,
+    private dialog: MatDialog,
     private imageService: ImageService
   ) {
     if (this.service.user?.imageUrl) this.showImageInput = true;
@@ -88,35 +92,57 @@ export class EditProfileComponent {
     this.emitImageUrl('');
   }
 
+  dialogConfirm(callback: Function, data: IDialogData): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe(result => {
+        if (!!result)
+          callback();
+      })
+  }
+
   editProfileHandler(form: NgForm): void {
     let { username, imageUrl, password } = form.value;
 
-    const action = () => this.service.editProfile({ username: username.trim(), imageUrl: imageUrl.trim(), password: password.trim() }).subscribe({
-      next: () => {
-        this.router.navigate(['/'])
+    this.dialogConfirm(
+      () => {
+        const action = () => this.service.editProfile({ username: username.trim(), imageUrl: imageUrl.trim(), password: password.trim() }).subscribe({
+          next: () => {
+            this.router.navigate(['/'])
 
-        this._snackbar.openFromComponent(NotificationComponent, {
-          data: {
-            type: 'success',
-            message: 'Successfully edited profile!'
-          }
+            this._snackbar.openFromComponent(NotificationComponent, {
+              data: {
+                type: 'success',
+                message: 'Successfully edited profile!'
+              }
+            })
+          },
+          error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+            data: {
+              type: 'error',
+              message: err.error.message || 'Couldn\'t edit profile.'
+            }
+          })
         })
-      },
-      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
-        data: {
-          type: 'error',
-          message: err.error.message || 'Couldn\'t edit profile.'
-        }
-      })
-    })
 
-    if (this.file) {
-      this.imageService.postImage(this.file).subscribe(image => {
-        imageUrl = image.url
-        action();
-      })
-    } else {
-      action();
+        if (this.file) {
+          this.imageService.postImage(this.file).subscribe(image => {
+            imageUrl = image.url
+            action();
+          })
+        } else {
+          action();
+        }
+      }, {
+      title: 'Edit Profile confirmation',
+      content: 'Are you sure you want to edit your profile?',
+      cancel: 'Nevermind',
+      continue: 'EDIT'
     }
+    )
   }
 }
