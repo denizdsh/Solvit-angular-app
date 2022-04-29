@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { ValidateMatchPatternDirective } from './directives/validate-match-pattern.directive';
 import { ValidateSameValueDirective } from './directives/validate-same-value.directive';
 import { AvatarComponent } from './avatar/avatar.component';
@@ -26,7 +27,8 @@ import { NotificationComponent } from './notification/notification.component';
     CommonModule,
     MatDialogModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule
   ],
   exports: [
     ValidateMatchPatternDirective,

@@ -1,2 +1,2 @@
-<app-topic-form title="Create Topic" (topicData)="createTopicHandler($event)"
+<app-topic-form [title]="'Create Topic'" (topicData)="createTopicHandler($event)"
     (closeCreateTopic)="closeCreateTopic.emit($event)"></app-topic-form>

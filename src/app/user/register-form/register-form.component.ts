@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ImageService } from 'src/app/shared/image.service';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { icons, patterns } from 'src/app/shared/util';
 import { UserService } from '../user.service';
@@ -43,12 +44,14 @@ export class RegisterFormComponent {
   passwordType: 'password' | 'text' = 'password';
   repasswordType: 'password' | 'text' = 'password';
   showImageInput: boolean = false;
+  file: File | undefined;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private _snackbar: MatSnackBar,
-    private service: UserService
+    private service: UserService,
+    private imageService: ImageService
   ) { }
 
   get icons() { return icons };
@@ -72,12 +75,29 @@ export class RegisterFormComponent {
     else this.imageUrlEmitter.emit(undefined);
   }
 
+  fileChangeValueHandler(e: any): void {
+    this.file = e.target.files[0];
+
+    if (!this.file?.type.startsWith('image/'))
+      return this.emitImageUrl('');
+
+    let fr = new FileReader();
+    fr.readAsDataURL(this.file);
+    fr.onloadend = (e) => this.emitImageUrl(fr.result as string);
+  }
+
+  resetImageValuesHandler(inputs: HTMLInputElement[]) {
+    this.file = undefined;
+    inputs.forEach(i => i.value = '');
+    this.emitImageUrl('');
+  }
+
   registerHandler(form: NgForm): void {
     if (form.invalid) return;
 
-    const { email, username, password, repassword, imageUrl } = form.value;
+    let { email, username, password, repassword, imageUrl } = form.value;
 
-    this.service.register({
+    const action = () => this.service.register({
       email: email.trim(),
       username: username.trim(),
       password: password.trim(),
@@ -101,5 +121,15 @@ export class RegisterFormComponent {
         }
       })
     });
+
+    if (this.file) {
+      this.imageService.postImage(this.file).subscribe(image => {
+        console.log(image.url);
+        imageUrl = image.url;
+        action();
+      })
+    } else {
+      action();
+    }
   }
 }

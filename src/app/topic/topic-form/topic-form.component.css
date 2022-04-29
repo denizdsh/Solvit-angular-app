@@ -88,12 +88,6 @@
     min-height: 15vh;
 }
 
-.link-to-imgur {
-    font-size: 0.9rem;
-    color: rgb(117, 171, 189);
-    padding-left: 8px;
-}
-
 .topic-form-submit {
     font-size: 1.05rem;
     height: fit-content;
@@ -111,4 +105,52 @@
 
 .topic-form-submit:active {
     background: #4b8299;
+}
+
+.image-input {
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+}
+
+.image-input-url {
+    flex-grow: 1;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.upload-btn {
+    margin-right: 8px;
+}
+
+.remove-uploaded-image {
+    margin-left: 5px;
+}
+
+[aria-label]:hover::after {
+    position: absolute;
+    bottom: 48px;
+    font-size: 0.8rem;
+    padding: 0px 10px;
+    color: inherit;
+    background-color: rgba(29, 30, 33, 0.96);
+    border-radius: 5px;
+}
+
+[aria-label="Click to upload an image from your files"]:hover::after {
+    left: 0;
+    content: 'Click to upload an image from your files';
+}
+
+[aria-label="Remove image file or image url"]:hover::after {
+    right: 0;
+    content: 'Remove image file or image url';
 }

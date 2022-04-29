@@ -71,6 +71,7 @@
 
 .auth-form-imageUrl-label:hover {
     cursor: pointer;
+    user-select: none;
 }
 
 .link-to-other-auth {
@@ -128,4 +129,67 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.no-style .avatar-error {
+    bottom: calc(1.2rem + 44px);
+}
+
+.image-input {
+    display: flex;
+    align-items: center;
+}
+
+.image-input div {
+    margin: 0;
+}
+
+.auth-form div.image-input-file {
+    width: fit-content;
+}
+
+.image-input-url {
+    flex-grow: 1;
+}
+
+.auth-form-input.imageUrl {
+    margin-top: 0;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.upload-btn {
+    margin-right: 8px;
+}
+
+.remove-uploaded-image {
+    margin-left: 5px;
+}
+
+[aria-label]:hover::after {
+    position: absolute;
+    bottom: 48px;
+    font-size: 0.8rem;
+    padding: 0px 10px;
+    color: inherit;
+    background-color: rgba(29, 30, 33, 0.96);
+    border-radius: 5px;
+}
+
+[aria-label="Click to upload an image from your files"]:hover::after {
+    left: 0;
+    content: 'Click to upload an image from your files';
+}
+
+[aria-label="Remove image file or image url"]:hover::after {
+    right: 0;
+    content: 'Remove image file or image url';
 }

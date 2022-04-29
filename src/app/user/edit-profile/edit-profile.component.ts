@@ -7,6 +7,7 @@ import { UserService } from '../user.service';
 import { IUser } from 'src/app/interfaces';
 import { NotificationComponent } from 'src/app/shared/notification/notification.component';
 import { icons, patterns } from 'src/app/shared/util';
+import { ImageService } from 'src/app/shared/image.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -40,14 +41,15 @@ import { icons, patterns } from 'src/app/shared/util';
 })
 export class EditProfileComponent {
   @Output() imageUrlEmitter: EventEmitter<URL> = new EventEmitter();
-
   passwordType: 'password' | 'text' = 'password';
   showImageInput: boolean = false;
+  file: File | undefined;
 
   constructor(
     private router: Router,
     private _snackbar: MatSnackBar,
-    private service: UserService
+    private service: UserService,
+    private imageService: ImageService
   ) {
     if (this.service.user?.imageUrl) this.showImageInput = true;
   }
@@ -69,10 +71,27 @@ export class EditProfileComponent {
     else this.imageUrlEmitter.emit(undefined);
   }
 
-  editProfileHandler(form: NgForm): void {
-    const { username, imageUrl, password } = form.value;
+  fileChangeValueHandler(e: any): void {
+    this.file = e.target.files[0];
 
-    this.service.editProfile({ username: username.trim(), imageUrl: imageUrl.trim(), password: password.trim() }).subscribe({
+    if (!this.file?.type.startsWith('image/'))
+      return this.imageUrlEmitter.emit(undefined);
+
+    let fr = new FileReader();
+    fr.readAsDataURL(this.file);
+    fr.onloadend = (e) => this.imageUrlEmitter.emit(fr.result as unknown as URL);
+  }
+
+  resetImageValuesHandler(inputs: HTMLInputElement[]) {
+    this.file = undefined;
+    inputs.forEach(i => i.value = '');
+    this.emitImageUrl('');
+  }
+
+  editProfileHandler(form: NgForm): void {
+    let { username, imageUrl, password } = form.value;
+
+    const action = () => this.service.editProfile({ username: username.trim(), imageUrl: imageUrl.trim(), password: password.trim() }).subscribe({
       next: () => {
         this.router.navigate(['/'])
 
@@ -90,5 +109,14 @@ export class EditProfileComponent {
         }
       })
     })
+
+    if (this.file) {
+      this.imageService.postImage(this.file).subscribe(image => {
+        imageUrl = image.url
+        action();
+      })
+    } else {
+      action();
+    }
   }
 }

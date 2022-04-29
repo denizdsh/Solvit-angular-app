@@ -10,37 +10,56 @@
         </article>
         <!--  -->
         <label class="auth-form-label" for="username">Username<span class="required-asterisk">*</span></label>
-        <input [ngModel]="user?.username" #username="ngModel" class="auth-form-input" type="username" id="username" name="username"
-            placeholder="John Doe" required pattern=".*[\S]+.*" />
+        <input [ngModel]="user?.username" #username="ngModel" class="auth-form-input" type="username" id="username"
+            name="username" placeholder="John Doe" required pattern=".*[\S]+.*" />
     </div>
 
     <div class="no-style">
-        <!-- errors -->
-        <article [@avatarError]="showImageInput? 'open' : 'closed'"
-            [ngClass]="['error-popup', 'avatar-error', showImageInput? '' : 'closed']"
-            *ngIf="imageUrl.errors && imageUrl.touched">
-            <p class="error-popup-content">
-                <ng-container *ngIf="imageUrl.errors['matchPattern']">
-                    URL must start with HTTP
-                </ng-container>
-            </p>
-        </article>
-        <!--  -->
-        <div class="avatar-icon">
-            <label class="auth-form-label auth-form-imageUrl-label" for="imageUrl"
-                (click)="toggleShowImageInputHandler()">
-                Avatar icon
-                <fa-icon [icon]="icons.caretRight" *ngIf="!showImageInput"></fa-icon>
-                <fa-icon [icon]="icons.caretDown" *ngIf="showImageInput"></fa-icon>
-            </label>
-            <div [@openClose]="showImageInput? 'open' : 'closed'">
-                <input [ngModel]="user?.imageUrl" #imageUrl="ngModel" class="auth-form-input" type='url' id="imageUrl" name="imageUrl"
-                    placeholder='www.image.com' [matchPattern]="patterns.url"
-                    (input)="emitImageUrl(imageUrl.value.trim())">
-                <a class="link-to-imgur" href="https://imgur.com/upload" target="_blank" rel="noreferrer">
-                    You can upload your image here...
-                </a>
+        <label class="auth-form-label auth-form-imageUrl-label" for="imageUrl" (click)="toggleShowImageInputHandler()">
+            Avatar icon
+            <fa-icon [icon]="icons.caretRight" *ngIf="!showImageInput"></fa-icon>
+            <fa-icon [icon]="icons.caretDown" *ngIf="showImageInput"></fa-icon>
+            {{showImageInput? 'Upload image or paste url' : ''}}
+        </label>
+        <div [@openClose]="showImageInput? 'open' : 'closed'" class="avatar-icon image-input">
+            <!-- errors -->
+            <article class="error-popup" *ngIf="file && !fileUpload.files?.item(0)?.type?.startsWith('image/')">
+                <p class="error-popup-content">
+                    Only images allowed
+                </p>
+            </article>
+            <!--  -->
+            <!-- errors -->
+            <article [@avatarError]="showImageInput? 'open' : 'closed'"
+                [ngClass]="['error-popup', 'avatar-error', showImageInput? '' : 'closed']"
+                *ngIf="imageUrl.errors && imageUrl.touched">
+                <p class="error-popup-content">
+                    <ng-container *ngIf="imageUrl.errors['matchPattern']">
+                        URL must start with HTTP
+                    </ng-container>
+                </p>
+            </article>
+            <!--  -->
+            <div class="image-input-file">
+                <input #fileUpload type="file" name="file" class="file-input" (change)="fileChangeValueHandler($event)">
+                <div class="file-upload">
+                    <button type="button" mat-mini-fab color="warn" class="upload-btn"
+                        aria-label="Click to upload an image from your files" (click)="fileUpload.click()">
+                        <mat-icon>attach_file</mat-icon>
+                    </button>
+                </div>
             </div>
+            <div class="image-input-url">
+                <input #imageUrlInput [ngModel]="fileUpload.files?.item(0)?.name || user?.imageUrl || ''"
+                    #imageUrl="ngModel" type="url" name="imageUrl" id="imageUrl" class="auth-form-input imageUrl"
+                    placeholder='https://myawesomeimage.com/solvit-is-the-best.png' [matchPattern]="patterns.url"
+                    [disabled]="!!file" (input)="emitImageUrl(imageUrl.value.trim())" />
+            </div>
+            <button type="button" mat-icon-button color="warn" class="remove-uploaded-image"
+                aria-label="Remove image file or image url"
+                (click)="resetImageValuesHandler([imageUrlInput, fileUpload])">
+                <mat-icon>remove_circle_outline</mat-icon>
+            </button>
         </div>
     </div>
 

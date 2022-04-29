@@ -1,10 +1,11 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, NgForm, NgModel, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ITopic, ITopicData } from 'src/app/interfaces';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
+import { ImageService } from 'src/app/shared/image.service';
 import { mainCategories, subCategories, categories, formatCategory, category, patterns } from 'src/app/shared/util';
 
 interface ICategory {
@@ -37,8 +38,7 @@ export class TopicFormComponent implements OnInit {
   @ViewChild('modal') modal!: ElementRef;
   defaultCategory: category | undefined;
   modalListener!: () => void;
-  // modalRouterSubscription!: Subscription;
-  // currentUrl!: string;
+  file: File | undefined;
 
   categoryControl = new FormControl(null, [Validators.required, categoryValidator]);
   categoryGroups: ICategoryGroup[] = [
@@ -60,44 +60,63 @@ export class TopicFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private renderer: Renderer2,
-    public dialog: MatDialog) {
-    // this.currentUrl = this.router.routerState.snapshot.url;
+    public dialog: MatDialog,
+    private imageService: ImageService
+  ) {
     if (!this.topic)
       this.defaultCategory = this.activatedRoute.snapshot.params['category'];
   }
   get patterns() { return patterns; }
   get formatCategory(): Function { return formatCategory; }
+
   ngOnInit(): void {
     this.modalListener = this.renderer.listen('window', 'click', (e: PointerEvent): void => {
       if (e.target === this.modal.nativeElement) {
         this.dialogConfirm(() => this.closeCreateTopic.emit(false));
       }
     })
-    // this.modalRouterSubscription = this.router.events.subscribe(e => {
-    //   if (e instanceof NavigationStart) {
-    //     this.dialogConfirm(() => this.router.navigateByUrl(this.currentUrl, { skipLocationChange: true }))
-    //   }
-    // }) global state + route guard can manage dialog on routing
   }
 
   ngOnDestroy(): void {
     if (this.modalListener) this.modalListener();
-    // if (this.modalRouterSubscription) this.modalRouterSubscription.unsubscribe();
+  }
+
+  fileChangeValueHandler(e: any) {
+    this.file = e.target.files[0];
+    console.log(this.file);
+  }
+
+  resetImageValuesHandler(inputs: HTMLInputElement[]) {
+    this.file = undefined;
+    inputs.forEach(i => i.value = '');
   }
 
   submitHandler(form: NgForm): void {
     console.log(form.value, this.categoryControl.value);
-    const { title, description, imageUrl } = form.value;
+    let { title, description, imageUrl } = form.value;
     this.categoryControl.updateValueAndValidity();
 
     if (form.invalid || this.categoryControl.invalid) return;
 
-    this.topicData.emit({
-      title: title.trim() as string,
-      description: description.trim() as string,
-      imageUrl: imageUrl.trim() as URL | undefined,
-      category: this.categoryControl.value
-    })
+    if (this.file) {
+      this.imageService.postImage(this.file).subscribe(
+        (image) => {
+          this.topicData.emit({
+            title: title.trim() as string,
+            description: description.trim() as string,
+            imageUrl: image.url,
+            category: this.categoryControl.value
+          })
+        }
+      );
+    } else {
+      this.topicData.emit({
+        title: title.trim() as string,
+        description: description.trim() as string,
+        imageUrl: imageUrl.trim() as URL | undefined,
+        category: this.categoryControl.value
+      })
+    }
   }
 
   dialogConfirm(callback: Function): void {
