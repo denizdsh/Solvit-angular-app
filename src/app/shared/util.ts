@@ -82,12 +82,13 @@ export function formatDate(rawDate: string): string {
     return (() => {
         if (currentYear == year && currentMonth + 1 == month && currentDay == day) {
             const currentHour = currentDate.getUTCHours();
-            if (currentHour - hour > 0) {
-                return `${currentHour - hour} hours ago`;
-            } else {
-                const currentMinutes = currentDate.getUTCMinutes();
-                if (currentMinutes - minutes > 0) {
-                    return `${currentMinutes - minutes} minutes ago`;
+            const currentMinutes = currentDate.getUTCMinutes();
+            const minutesDifference = (currentHour * 60 + currentMinutes) - (hour * 60 + minutes);
+            if (minutesDifference >= 60)
+                return `${Math.floor(minutesDifference / 60)} hours ago`;
+            else {
+                if (minutesDifference > 0) {
+                    return `${minutesDifference} minutes ago`;
                 } else {
                     return 'a few moments ago';
                 }
