@@ -1,9 +1,11 @@
+import { HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, NgForm, NgModel, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ITopic, ITopicData } from 'src/app/interfaces';
+import { IDialogData } from 'src/app/interfaces/dialogData';
 import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { ImageService } from 'src/app/shared/image.service';
 import { mainCategories, subCategories, categories, formatCategory, category, patterns } from 'src/app/shared/util';
@@ -31,7 +33,7 @@ function categoryValidator(): ValidatorFn {
   styleUrls: ['./topic-form.component.css']
 })
 export class TopicFormComponent implements OnInit {
-  @Input() title: string | undefined;
+  @Input() title!: 'Create Topic' | 'Edit Topic';
   @Input() topic: ITopic | undefined;
   @Output() closeCreateTopic: EventEmitter<boolean> = new EventEmitter();
   @Output() topicData: EventEmitter<ITopicData> = new EventEmitter();
@@ -39,6 +41,8 @@ export class TopicFormComponent implements OnInit {
   defaultCategory: category | undefined;
   modalListener!: () => void;
   file: File | undefined;
+
+  isLoading: boolean = false;
 
   categoryControl = new FormControl(null, [Validators.required, categoryValidator]);
   categoryGroups: ICategoryGroup[] = [
@@ -72,7 +76,12 @@ export class TopicFormComponent implements OnInit {
   ngOnInit(): void {
     this.modalListener = this.renderer.listen('window', 'click', (e: PointerEvent): void => {
       if (e.target === this.modal.nativeElement) {
-        this.dialogConfirm(() => this.closeCreateTopic.emit(false));
+        this.dialogConfirm(() => this.closeCreateTopic.emit(false), {
+          title: 'Cancellation confirmation',
+          content: 'Are you sure you want to cancel this action?',
+          cancel: 'Nevermind',
+          continue: 'Cancel'
+        });
       }
     })
   }
@@ -86,9 +95,10 @@ export class TopicFormComponent implements OnInit {
     console.log(this.file);
   }
 
-  resetImageValuesHandler(inputs: HTMLInputElement[]) {
+  resetImageValuesHandler(imageFile: HTMLInputElement, imageUrl: NgModel) {
     this.file = undefined;
-    inputs.forEach(i => i.value = '');
+    imageFile.value = '';
+    imageUrl.reset();
   }
 
   submitHandler(form: NgForm): void {
@@ -98,35 +108,42 @@ export class TopicFormComponent implements OnInit {
 
     if (form.invalid || this.categoryControl.invalid) return;
 
-    if (this.file) {
-      this.imageService.postImage(this.file).subscribe(
-        (image) => {
-          this.topicData.emit({
-            title: title.trim() as string,
-            description: description.trim() as string,
-            imageUrl: image.url,
-            category: this.categoryControl.value
+    const action = () => {
+      this.isLoading = true;
+
+      if (this.file) {
+        this.imageService.postImage(this.file).subscribe(
+          (image) => {
+            this.topicData.emit({
+              title: title.trim() as string,
+              description: description.trim() as string,
+              imageUrl: image.url,
+              category: this.categoryControl.value
+            })
           })
-        }
-      );
-    } else {
-      this.topicData.emit({
-        title: title.trim() as string,
-        description: description.trim() as string,
-        imageUrl: imageUrl.trim() as URL | undefined,
-        category: this.categoryControl.value
-      })
+      } else {
+        this.topicData.emit({
+          title: title.trim() as string,
+          description: description.trim() as string,
+          imageUrl: (imageUrl ? imageUrl.trim() : '') as URL | undefined,
+          category: this.categoryControl.value
+        })
+      }
     }
+
+    if (this.title === 'Edit Topic') this.dialogConfirm(action, {
+      title: 'Edit Topic confirmation',
+      content: 'Are you sure you want to edit this topic?',
+      cancel: 'Nevermind',
+      continue: 'EDIT'
+    });
+
+    else action();
   }
 
-  dialogConfirm(callback: Function): void {
+  dialogConfirm(callback: Function, data: IDialogData): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: {
-        title: 'Cancellation confirmation',
-        content: 'Are you sure you want to cancel this action?',
-        cancel: 'Nevermind',
-        continue: 'Cancel'
-      }
+      data
     });
 
     dialogRef

@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageService } from 'src/app/shared/image.service';
@@ -86,9 +86,10 @@ export class RegisterFormComponent {
     fr.onloadend = (e) => this.emitImageUrl(fr.result as string);
   }
 
-  resetImageValuesHandler(inputs: HTMLInputElement[]) {
+  resetImageValuesHandler(imageFile: HTMLInputElement, imageUrl: NgModel) {
     this.file = undefined;
-    inputs.forEach(i => i.value = '');
+    imageFile.value = '';
+    imageUrl.reset();
     this.emitImageUrl('');
   }
 
@@ -102,7 +103,7 @@ export class RegisterFormComponent {
       username: username.trim(),
       password: password.trim(),
       repassword: repassword.trim(),
-      imageUrl: imageUrl.trim()
+      imageUrl: imageUrl ? imageUrl.trim() : ''
     }).subscribe({
       next: () => {
         this.router.navigate([this.activatedRoute.snapshot.queryParams['redirect'] || '/'])

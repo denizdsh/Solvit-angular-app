@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserService } from '../user.service';
@@ -86,9 +86,10 @@ export class EditProfileComponent {
     fr.onloadend = (e) => this.imageUrlEmitter.emit(fr.result as unknown as URL);
   }
 
-  resetImageValuesHandler(inputs: HTMLInputElement[]) {
+  resetImageValuesHandler(imageFile: HTMLInputElement, imageUrl: NgModel) {
     this.file = undefined;
-    inputs.forEach(i => i.value = '');
+    imageFile.value = '';
+    imageUrl.reset();
     this.emitImageUrl('');
   }
 
@@ -110,7 +111,7 @@ export class EditProfileComponent {
 
     this.dialogConfirm(
       () => {
-        const action = () => this.service.editProfile({ username: username.trim(), imageUrl: imageUrl.trim(), password: password.trim() }).subscribe({
+        const action = () => this.service.editProfile({ username: username.trim(), imageUrl: imageUrl ? imageUrl.trim() : '', password: password.trim() }).subscribe({
           next: () => {
             this.router.navigate(['/'])
 

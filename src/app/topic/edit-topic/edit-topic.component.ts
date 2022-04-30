@@ -20,49 +20,30 @@ export class EditTopicComponent {
   constructor(
     private router: Router,
     private _snackbar: MatSnackBar,
-    private dialog: MatDialog,
     private service: TopicService) { }
 
-  dialogConfirm(callback: Function, data: IDialogData): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data
-    });
-
-    dialogRef
-      .afterClosed()
-      .subscribe(result => {
-        if (!!result)
-          callback();
-      })
-  }
 
   editTopicHandler(body: ITopicData): void {
-    this.dialogConfirm(() =>
-      this.service.editTopic(this.topicInput._id, body).subscribe({
-        next: (topic) => {
-          this.closeCreateTopic.emit(false);
+    this.service.editTopic(this.topicInput._id, body).subscribe({
+      next: (topic) => {
+        this.closeCreateTopic.emit(false);
 
-          this.router.navigate(['/'], { skipLocationChange: true })
-            .then(() => this.router.navigate(['/t/' + topic._id]))
+        this.router.navigate(['/'], { skipLocationChange: true })
+          .then(() => this.router.navigate(['/t/' + topic._id]))
 
-          this._snackbar.openFromComponent(NotificationComponent, {
-            data: {
-              type: 'success',
-              message: 'Successfully edited your topic.'
-            }
-          })
-        },
-        error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        this._snackbar.openFromComponent(NotificationComponent, {
           data: {
-            type: 'error',
-            message: err.error.message || 'Couldn\'t edit topic.'
+            type: 'success',
+            message: 'Successfully edited your topic.'
           }
         })
-      }), {
-      title: 'Edit Topic confirmation',
-      content: 'Are you sure you want to edit this topic?',
-      cancel: 'Nevermind',
-      continue: 'EDIT'
+      },
+      error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
+        data: {
+          type: 'error',
+          message: err.error.message || 'Couldn\'t edit topic.'
+        }
+      })
     })
   }
 }

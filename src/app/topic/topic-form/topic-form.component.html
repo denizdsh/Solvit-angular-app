@@ -77,14 +77,14 @@
                                 </p>
                             </article>
                             <!--  -->
-                            <input #imageUrlInput [ngModel]="fileUpload.files?.item(0)?.name || topic?.imageUrl || ''"
+                            <input [ngModel]="fileUpload.files?.item(0)?.name || topic?.imageUrl || ''"
                                 #imageUrl="ngModel" type="url" name="imageUrl" id="topic-imageUrl"
                                 class="topic-form-input" placeholder='https://myawesomeimage.com/solvit-is-the-best.png'
                                 [matchPattern]="patterns.url" [disabled]="!!file" />
                         </div>
                         <button type="button" mat-icon-button color="warn" class="remove-uploaded-image"
                             aria-label="Remove image file or image url"
-                            (click)="resetImageValuesHandler([imageUrlInput, fileUpload])">
+                            (click)="resetImageValuesHandler(fileUpload, imageUrl)">
                             <mat-icon>remove_circle_outline</mat-icon>
                         </button>
                     </article>
@@ -110,6 +110,6 @@
                 </section>
             </form>
         </section>
+        <app-loader *ngIf="isLoading"></app-loader>
     </div>
-
 </div>
