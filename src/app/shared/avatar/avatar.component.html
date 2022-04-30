@@ -1,5 +1,5 @@
 <article class="avatar-container" [style]="style">
-    <article *ngIf="!image || !imageHasLoaded" class="avatar-alt">
+    <article *ngIf="!image || !imageHasLoaded" [class]="'avatar-alt ' + (alt ? '' : 'guest')">
         {{alt && alt.toLocaleUpperCase()}}
         <mat-icon [ngStyle]="{fontSize: size,width: '100%',height: '100%'}" *ngIf="!alt">account_circle
         </mat-icon>
