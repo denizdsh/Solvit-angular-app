@@ -2,6 +2,7 @@
 ### Created with the idea of being a forum where developers can exchange knowledge, help each other out, promote their projects and most importantly *share memes*
 ### Angular project used for Angular course exam at SoftUni 
 #### Deployed on firebase: https://solvit-forum.web.app
+#### Link to REST API repo: https://github.com/denizdsh/Solvit-rest-api
 
 ### Functionality:
 #### Guests can:
