@@ -9,17 +9,25 @@ import { topicType } from '../util';
 })
 export class NoPostsMessageComponent {
   @Input() type!: topicType;
+  @Input() username: string | undefined;
 
   constructor(private userService: UserService) { }
 
   get message(): string {
-    if (this.type === 'followed') {
-      if (this.userService.followedCategories.length === 0)
-        return 'You haven\'t followed any categories yet';
+    switch (this.type) {
+      case 'followed':
+        if (this.userService.followedCategories.length === 0)
+          return 'You haven\'t followed any categories yet';
 
-      return 'No topics in the categories you\'ve followed yet.'
+        return 'No topics in the categories you\'ve followed yet.';
+
+      case 'saved':
+        return 'You haven\'t saved any topics yet.';
+
+      case 'user':
+        return `${this.username} has not posted yet.`
+
+      default: return 'No topics yet. Be the first to post one!';
     }
-
-    return 'No topics yet. Be the first to post one!'
   }
 }

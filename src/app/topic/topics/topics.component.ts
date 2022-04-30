@@ -73,6 +73,7 @@ export class TopicsComponent implements OnInit {
             message: err.error.message || 'Couldn\'t load topics.'
           }
         })
+        this.isLoading = false;
       },
       complete: () => this.isLoading = false
     })

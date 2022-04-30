@@ -11,7 +11,7 @@
 
         <app-create-topic-link *ngIf="type !== 'user'" (triggerCreateTopic)="trigger = $event"></app-create-topic-link>
 
-        <app-no-posts-message *ngIf="!isLoading && topics!.length == 0" [type]="type">
+        <app-no-posts-message *ngIf="!isLoading && (!topics || topics?.length == 0)" [username]="urlProp" [type]="type">
         </app-no-posts-message>
 
         <app-topic-card *ngFor="let topic of topics" [topic]="topic"></app-topic-card>
