@@ -118,7 +118,7 @@ export class RegisterFormComponent {
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',
-          message: err.messagge || 'Couldn\'t register.'
+          message: err.messagge || 'Couldn\'t register'
         }
       })
     });

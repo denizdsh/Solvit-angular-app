@@ -43,7 +43,13 @@ import { LocalStorage } from '../injection-tokens';
             }
 
             key(index: number): string | null {
-              throw new Error('Method not implemented.');
+              const keys = Object.keys(this.data);
+
+              if (index >= keys.length || index < 0) {
+                return null;
+              }
+
+              return keys[index];
             }
 
             removeItem(key: string): void {

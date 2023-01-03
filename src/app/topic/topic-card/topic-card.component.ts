@@ -39,7 +39,7 @@ export class TopicCardComponent {
 
     this._snackbar.openFromComponent(NotificationComponent, {
       data: {
-        message: 'You have to be authenticated to perform such actions.',
+        message: 'You have to be authenticated to perform such actions',
         type: 'warning'
       }
     })
@@ -84,7 +84,7 @@ export class TopicCardComponent {
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',
-          message: err.error.message || 'Couldn\'t perform action.'
+          message: err.error.message || 'Couldn\'t perform action'
         }
       })
     })

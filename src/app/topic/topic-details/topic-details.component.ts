@@ -56,7 +56,7 @@ export class TopicDetailsComponent implements OnInit {
           this._snackbar.openFromComponent(NotificationComponent, {
             data: {
               type: 'error',
-              message: 'Couldn\'t load topic.'
+              message: 'Couldn\'t load topic'
             }
           })
         },
@@ -108,7 +108,7 @@ export class TopicDetailsComponent implements OnInit {
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',
-          message: err.error.message || 'Couldn\'t perform action.'
+          message: err.error.message || 'Couldn\'t perform action'
         }
       })
     })
@@ -147,7 +147,7 @@ export class TopicDetailsComponent implements OnInit {
           this._snackbar.openFromComponent(NotificationComponent, {
             data: {
               type: 'success',
-              message: 'Successfully deleted topic.'
+              message: 'Successfully deleted topic'
             }
           })
 
@@ -156,7 +156,7 @@ export class TopicDetailsComponent implements OnInit {
         error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
           data: {
             type: 'error',
-            message: err.error.message || 'Couldn\t delete topic.'
+            message: err.error.message || 'Couldn\t delete topic'
           }
         })
       }), {

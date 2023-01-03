@@ -125,7 +125,7 @@ export class EditProfileComponent {
           error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
             data: {
               type: 'error',
-              message: err.error.message || 'Couldn\'t edit profile.'
+              message: err.error.message || 'Couldn\'t edit profile'
             }
           })
         })

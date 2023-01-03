@@ -61,7 +61,7 @@ export class CommentSectionComponent implements OnInit {
         this._snackbar.openFromComponent(NotificationComponent, {
           data: {
             type: 'success',
-            message: 'Successfully commented.'
+            message: 'Successfully commented'
           }
         })
       }
@@ -72,7 +72,7 @@ export class CommentSectionComponent implements OnInit {
     if (!this.isAuth) {
       this._snackbar.openFromComponent(NotificationComponent, {
         data: {
-          message: 'You have to be authenticated to comment.',
+          message: 'You have to be authenticated to comment',
           type: 'warning'
         }
       })

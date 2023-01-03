@@ -34,14 +34,14 @@ export class EditTopicComponent {
         this._snackbar.openFromComponent(NotificationComponent, {
           data: {
             type: 'success',
-            message: 'Successfully edited your topic.'
+            message: 'Successfully edited your topic'
           }
         })
       },
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',
-          message: err.error.message || 'Couldn\'t edit topic.'
+          message: err.error.message || 'Couldn\'t edit topic'
         }
       })
     })

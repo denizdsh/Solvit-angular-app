@@ -29,14 +29,14 @@ export class CreateTopicComponent {
         this._snackbar.openFromComponent(NotificationComponent, {
           data: {
             type: 'success',
-            message: 'Successfully posted a topic.'
+            message: 'Successfully posted a topic'
           }
         })
       },
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',
-          message: err.error.message || 'Couldn\'t post topic.'
+          message: err.error.message || 'Couldn\'t post topic'
         }
       })
     })

@@ -70,7 +70,7 @@ export class TopicsComponent implements OnInit {
         console.log(err); this._snackbar.openFromComponent(NotificationComponent, {
           data: {
             type: 'error',
-            message: err.error.message || 'Couldn\'t load topics.'
+            message: err.error.message || 'Couldn\'t load topics'
           }
         })
         this.isLoading = false;

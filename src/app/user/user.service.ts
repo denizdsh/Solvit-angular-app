@@ -60,7 +60,7 @@ export class UserService {
           this._snackbar.openFromComponent(NotificationComponent, {
             data: {
               type: 'error',
-              message: err.error.message || 'Session expired. Please log in.'
+              message: err.error.message || 'Session expired. Please log in'
             }
           })
         },
@@ -174,13 +174,13 @@ export class UserService {
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',
-          message: err.error.message || 'Couldn\'t save topic.'
+          message: err.error.message || 'Couldn\'t save topic'
         }
       }),
       complete: () => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'info',
-          message: 'Saved topic.'
+          message: 'Saved topic'
         }
       })
     })
@@ -192,13 +192,13 @@ export class UserService {
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'error',
-          message: err.error.message || 'Couldn\'t unsave topic.'
+          message: err.error.message || 'Couldn\'t unsave topic'
         }
       }),
       complete: () => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'info',
-          message: 'Unsaved topic.'
+          message: 'Unsaved topic'
         }
       })
     })

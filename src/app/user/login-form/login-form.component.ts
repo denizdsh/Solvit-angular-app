@@ -48,7 +48,7 @@ export class LoginFormComponent {
       error: (err) => this._snackbar.openFromComponent(NotificationComponent, {
         data: {
           type: 'info',
-          message: err.error.message || 'Couldn\'t log in.'
+          message: err.error.message || 'Couldn\'t log in'
         }
       })
     });

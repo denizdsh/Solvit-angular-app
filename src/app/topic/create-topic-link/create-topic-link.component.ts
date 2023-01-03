@@ -31,7 +31,7 @@ export class CreateTopicLinkComponent {
     this._snackbar.openFromComponent(NotificationComponent, {
       data: {
         type: 'warning',
-        message: 'You have to be authenticated to post topics.'
+        message: 'You have to be authenticated to post topics'
       }
     })
   }
